@@ -1,0 +1,10 @@
+.cms-img-select{
+	border: 5px solid transparent;
+	width: calc(50% - 20px);
+	display: inline-block;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.45);
+	margin: 5px;
+}
+.cms-img-select.selected{
+	border: 5px solid #0073aa;
+}
