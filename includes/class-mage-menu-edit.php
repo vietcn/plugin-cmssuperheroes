@@ -80,16 +80,9 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
                 </select>
             </label>
         </p>
-
-<!--        <p class="description description-wide">-->
-<!--            <label for="edit-menu-item-rella-icon-position---><?php //echo esc_attr( $item_id ); ?><!--">-->
-<!--                --><?php //esc_html_e( 'Icon Position', 'cmssuperheroes' ); ?><!--<br />-->
-<!--                <select id="edit-menu-item-rella-icon-position---><?php //echo esc_attr( $item_id ); ?><!--" class="widefat" name="menu-item-rella-icon-position[--><?php //echo esc_attr( $item_id ); ?><!--]">-->
-<!--                    <option value="left" --><?php //selected( 'left', esc_attr( $item->rella_icon_position ) ) ?><!-->--><?php //esc_html_e( 'Left', 'cmssuperheroes' ); ?><!--</option>-->
-<!--                    <option value="right" --><?php //selected( 'right', esc_attr( $item->rella_icon_position ) ) ?><!-->--><?php //esc_html_e( 'Right', 'cmssuperheroes' ); ?><!--</option>-->
-<!--                </select>-->
-<!--            </label>-->
-<!--        </p>-->
+        <script>
+            jQuery('.cms-icon-picker').fontIconPicker();
+        </script>
 
         <?php
         return ob_get_clean();

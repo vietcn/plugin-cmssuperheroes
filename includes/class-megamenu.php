@@ -25,6 +25,7 @@ class EFramework_MegaMenu_Register
      */
     function __construct()
     {
+        add_action('admin_enqueue_scripts',array($this,'cms_enqueue_style'));
         add_action('init', array($this, 'init'), 0);
         // Custom Fields - Add
         add_filter('wp_setup_nav_menu_item', array($this, 'setup_nav_menu_item'));
@@ -114,12 +115,17 @@ class EFramework_MegaMenu_Register
 
     // Custom Backend Walker - Edit
     function edit_nav_menu_walker( $walker, $menu_id ) {
-
         if ( ! class_exists( 'EFramework_Mega_Menu_Edit_Walker' ) ) {
             require_once( CMS_INCLUDES . 'class-mage-menu-edit.php' );
         }
 
         return 'EFramework_Mega_Menu_Edit_Walker';
+    }
+    function cms_enqueue_style(){
+        wp_enqueue_style('jquery.fonticonpicker.min.css',CMS_CSS.'iconpicker/css/jquery.fonticonpicker.min.css',array(),'all');
+        wp_enqueue_style('jquery.fonticonpicker.grey.min.css',CMS_CSS.'iconpicker/themes/grey-theme/jquery.fonticonpicker.grey.min.css',array(),'all');
+        wp_enqueue_script('jquery.fonticonpicker.js',CMS_CSS.'iconpicker/jquery.fonticonpicker.js',array('jquery'));
+        wp_enqueue_script('',CMS_CSS.'iconpicker/cms-iconpicker.js');
     }
 
 
