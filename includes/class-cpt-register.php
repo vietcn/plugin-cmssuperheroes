@@ -10,7 +10,7 @@ class EFramework_CPT_Register
 {
     /**
      * Core singleton class
-     * 
+     *
      * @var self - pattern realization
      * @access private
      */
@@ -30,7 +30,7 @@ class EFramework_CPT_Register
      */
     private function __construct()
     {
-        add_action( 'init', array( $this, 'init' ), 0 );
+        add_action('init', array($this, 'init'), 0);
     }
 
     /**
@@ -38,21 +38,17 @@ class EFramework_CPT_Register
      */
     function init()
     {
-        echo '<pre>';
-        var_dump(get_option('abtheme_theme_options'));
-        echo '</pre>';
-        $this->post_types = apply_filters( 'cmssuperheroes_extra_post_types', array(
+        $this->post_types = apply_filters('cmssuperheroes_extra_post_types', array(
             'portfolio'   => false,
             'team_member' => false
-        ) );
+        ));
 
-        if ( isset( $this->post_types['portfolio'] ) && $this->post_types['portfolio'] )
-        {
+        if (isset($this->post_types['portfolio']) && $this->post_types['portfolio']) {
             $this->type_portfolio_register();
+            flush_rewrite_rules();
         }
 
-        if ( isset( $this->post_types['team_member'] ) && $this->post_types['team_member'] )
-        {
+        if (isset($this->post_types['team_member']) && $this->post_types['team_member']) {
             $this->type_team_member_register();
         }
     }
@@ -66,35 +62,35 @@ class EFramework_CPT_Register
     protected function type_portfolio_register()
     {
 
-        $portfolio_slug = 'portfolio';
-        $args = apply_filters( 'cmssuperheroes_portfolio_post_type_args', array(
-            'labels' => array(
-                'name'                  => __( 'Portfolio', 'cmssuperheroes' ),
-                'singular_name'         => __( 'Portfolio Entry', 'cmssuperheroes' ),
-                'add_new'               => _x( 'Add New', 'add new on admin panel', 'cmssuperheroes' ),
-                'add_new_item'          => __( 'Add New Portfolio Entry', 'cmssuperheroes' ),
-                'edit_item'             => __( 'Edit Portfolio Entry', 'cmssuperheroes' ),
-                'new_item'              => __( 'New Portfolio Entry', 'cmssuperheroes' ),
-                'view_item'             => __( 'View Portfolio Entry', 'cmssuperheroes' ),
-                'view_items'            => __( 'View Portfolio Entries', 'cmssuperheroes' ),
-                'search_items'          => __( 'Search Portfolio Entries', 'cmssuperheroes' ),
-                'not_found'             => __( 'No Portfolio Entries Found', 'cmssuperheroes' ),
-                'not_found_in_trash'    => __( 'No Portfolio Entries Found in Trash', 'cmssuperheroes' ),
-                'parent_item_colon'     => __( 'Parent Portfolio Entry:', 'cmssuperheroes' ),
-                'all_items'             => __( 'All Entries', 'cmssuperheroes' ),
-                'archives'              => __( 'Portfolio Archives', 'cmssuperheroes' ),
-                'attributes'            => __( 'Portfolio Entry Attributes', 'cmssuperheroes' ),
-                'insert_into_item'      => __( 'Insert into Portfolio Entry', 'cmssuperheroes' ),
-                'uploaded_to_this_item' => __( 'Uploaded to this Portfolio Entry', 'cmssuperheroes' ),
-                'menu_name'             => __( 'Portfolio', 'cmssuperheroes' ),
-                'filter_items_list'     => __( 'Filter portfolio list', 'cmssuperheroes' ),
-                'items_list_navigation' => __( 'Portfolio list navigation', 'cmssuperheroes' ),
-                'items_list'            => __( 'Portfolio list', 'cmssuperheroes' ),
-                'name_admin_bar'        => _x( 'Portfolio', 'add new on admin bar', 'cmssuperheroes' )
+        $portfolio_slug = function_exists('abtheme_get_opt') ? abtheme_get_opt('portfolio_slug','portfolio') : 'portfolio';
+        $args = apply_filters('cmssuperheroes_portfolio_post_type_args', array(
+            'labels'              => array(
+                'name'                  => __('Portfolio', 'cmssuperheroes'),
+                'singular_name'         => __('Portfolio Entry', 'cmssuperheroes'),
+                'add_new'               => _x('Add New', 'add new on admin panel', 'cmssuperheroes'),
+                'add_new_item'          => __('Add New Portfolio Entry', 'cmssuperheroes'),
+                'edit_item'             => __('Edit Portfolio Entry', 'cmssuperheroes'),
+                'new_item'              => __('New Portfolio Entry', 'cmssuperheroes'),
+                'view_item'             => __('View Portfolio Entry', 'cmssuperheroes'),
+                'view_items'            => __('View Portfolio Entries', 'cmssuperheroes'),
+                'search_items'          => __('Search Portfolio Entries', 'cmssuperheroes'),
+                'not_found'             => __('No Portfolio Entries Found', 'cmssuperheroes'),
+                'not_found_in_trash'    => __('No Portfolio Entries Found in Trash', 'cmssuperheroes'),
+                'parent_item_colon'     => __('Parent Portfolio Entry:', 'cmssuperheroes'),
+                'all_items'             => __('All Entries', 'cmssuperheroes'),
+                'archives'              => __('Portfolio Archives', 'cmssuperheroes'),
+                'attributes'            => __('Portfolio Entry Attributes', 'cmssuperheroes'),
+                'insert_into_item'      => __('Insert into Portfolio Entry', 'cmssuperheroes'),
+                'uploaded_to_this_item' => __('Uploaded to this Portfolio Entry', 'cmssuperheroes'),
+                'menu_name'             => __('Portfolio', 'cmssuperheroes'),
+                'filter_items_list'     => __('Filter portfolio list', 'cmssuperheroes'),
+                'items_list_navigation' => __('Portfolio list navigation', 'cmssuperheroes'),
+                'items_list'            => __('Portfolio list', 'cmssuperheroes'),
+                'name_admin_bar'        => _x('Portfolio', 'add new on admin bar', 'cmssuperheroes')
             ),
             'hierarchical'        => false,
             'description'         => '',
-            'taxonomies'          => array( 'portfolio_category' ),
+            'taxonomies'          => array('portfolio_category'),
             'public'              => true,
             'show_ui'             => true,
             'show_in_menu'        => true,
@@ -120,8 +116,8 @@ class EFramework_CPT_Register
                 'excerpt',
                 'revisions'
             )
-        ) );
-        register_post_type( 'cmsportfolio', $args );
+        ));
+        register_post_type('cmsportfolio', $args);
     }
 
     /**
@@ -132,30 +128,30 @@ class EFramework_CPT_Register
      */
     protected function type_team_member_register()
     {
-        $args = apply_filters( 'cmssuperheroes_team_member_post_type_args', array(
-            'labels' => array(
-                'name'                  => __( 'Team', 'cmssuperheroes' ),
-                'singular_name'         => __( 'Team Member', 'cmssuperheroes' ),
-                'add_new'               => _x( 'Add New', 'add new on admin panel', 'cmssuperheroes' ),
-                'add_new_item'          => __( 'Add New Member', 'cmssuperheroes' ),
-                'edit_item'             => __( 'Edit Member', 'cmssuperheroes' ),
-                'new_item'              => __( 'New Member', 'cmssuperheroes' ),
-                'view_item'             => __( 'View Member', 'cmssuperheroes' ),
-                'view_items'            => __( 'View Members', 'cmssuperheroes' ),
-                'search_items'          => __( 'Search Members', 'cmssuperheroes' ),
-                'not_found'             => __( 'No Members Found', 'cmssuperheroes' ),
-                'not_found_in_trash'    => __( 'No Members Found in Trash', 'cmssuperheroes' ),
-                'parent_item_colon'     => __( 'Parent Member:', 'cmssuperheroes' ),
-                'all_items'             => __( 'All Members', 'cmssuperheroes' ),
-                'archives'              => __( 'Team Archives', 'cmssuperheroes' ),
-                'attributes'            => __( 'Member Attributes', 'cmssuperheroes' ),
-                'insert_into_item'      => __( 'Insert into Member', 'cmssuperheroes' ),
-                'uploaded_to_this_item' => __( 'Uploaded to this Member', 'cmssuperheroes' ),
-                'menu_name'             => __( 'Team', 'cmssuperheroes' ),
-                'filter_items_list'     => __( 'Filter Members list', 'cmssuperheroes' ),
-                'items_list_navigation' => __( 'Members list navigation', 'cmssuperheroes' ),
-                'items_list'            => __( 'Members list', 'cmssuperheroes' ),
-                'name_admin_bar'        => _x( 'Team', 'add new on admin bar', 'cmssuperheroes' ),
+        $args = apply_filters('cmssuperheroes_team_member_post_type_args', array(
+            'labels'              => array(
+                'name'                  => __('Team', 'cmssuperheroes'),
+                'singular_name'         => __('Team Member', 'cmssuperheroes'),
+                'add_new'               => _x('Add New', 'add new on admin panel', 'cmssuperheroes'),
+                'add_new_item'          => __('Add New Member', 'cmssuperheroes'),
+                'edit_item'             => __('Edit Member', 'cmssuperheroes'),
+                'new_item'              => __('New Member', 'cmssuperheroes'),
+                'view_item'             => __('View Member', 'cmssuperheroes'),
+                'view_items'            => __('View Members', 'cmssuperheroes'),
+                'search_items'          => __('Search Members', 'cmssuperheroes'),
+                'not_found'             => __('No Members Found', 'cmssuperheroes'),
+                'not_found_in_trash'    => __('No Members Found in Trash', 'cmssuperheroes'),
+                'parent_item_colon'     => __('Parent Member:', 'cmssuperheroes'),
+                'all_items'             => __('All Members', 'cmssuperheroes'),
+                'archives'              => __('Team Archives', 'cmssuperheroes'),
+                'attributes'            => __('Member Attributes', 'cmssuperheroes'),
+                'insert_into_item'      => __('Insert into Member', 'cmssuperheroes'),
+                'uploaded_to_this_item' => __('Uploaded to this Member', 'cmssuperheroes'),
+                'menu_name'             => __('Team', 'cmssuperheroes'),
+                'filter_items_list'     => __('Filter Members list', 'cmssuperheroes'),
+                'items_list_navigation' => __('Members list navigation', 'cmssuperheroes'),
+                'items_list'            => __('Members list', 'cmssuperheroes'),
+                'name_admin_bar'        => _x('Team', 'add new on admin bar', 'cmssuperheroes'),
             ),
             'hierarchical'        => false,
             'description'         => '',
@@ -181,9 +177,9 @@ class EFramework_CPT_Register
                 'excerpt',
                 'revisions'
             ),
-        ) );
+        ));
 
-        register_post_type( 'eteam_member', $args );
+        register_post_type('eteam_member', $args);
     }
 
     /**
@@ -194,8 +190,7 @@ class EFramework_CPT_Register
      */
     public static function get_instance()
     {
-        if ( ! ( self::$_instance instanceof self ) )
-        {
+        if (!(self::$_instance instanceof self)) {
             self::$_instance = new self();
         }
 
