@@ -82,16 +82,6 @@ vc_map(
 	        ),
 	        array(
 	            "type" => "dropdown",
-	            "heading" => __("Show Nav",CMS_NAME),
-	            "param_name" => "nav",
-	            "value" => array(
-	            	"True" => "true",
-	            	"False" => "false"
-	            	),
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
 	            "heading" => __("Show Dots",CMS_NAME),
 	            "param_name" => "dots",
 	            "value" => array(
@@ -142,7 +132,6 @@ class WPBakeryShortCode_cms_carousel extends CmsShortCode{
 			'large_items' => 4,
 			'margin' => 10,
 			'loop' => 'true',
-			'mousedrag' => 'true',
 			'nav' => 'true',
 			'dots' => 'true',
 			'autoplay' => 'true',
