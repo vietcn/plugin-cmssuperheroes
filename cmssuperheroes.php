@@ -55,6 +55,11 @@ class CmssuperheroesCore
             EFramework_CTax_Register::get_instance();
         }
 
+        if (!class_exists('EFramework_MegaMenu_Register')) {
+            require_once CMS_INCLUDES .'class-megamenu.php';
+            EFramework_MegaMenu_Register::get_instance();
+        }
+
         /**
          * Enqueue Scripts on plugin
          */

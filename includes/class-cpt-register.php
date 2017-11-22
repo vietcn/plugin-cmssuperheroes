@@ -1,9 +1,9 @@
 <?php
 /**
  * Custom post types register.
- *
- * @package eFramework
  * @since   1.0
+ * @author  KP
+ *
  */
 
 class EFramework_CPT_Register
