@@ -173,9 +173,7 @@ class CmssuperheroesCore
     function cms_admin_script()
     {
         wp_enqueue_style('admin-style', CMS_CSS . 'admin.css', array(), '1.0.0');
-        wp_enqueue_style('font-stroke7', CMS_CSS . 'Pe-icon-7-stroke.css', array(), '1.2.0');
         wp_enqueue_style('font-awesome', CMS_CSS . 'font-awesome.min.css', array(), 'all');
-        // wp_enqueue_style('font-glyphicons', CMS_CSS . 'glyphicons.css', array(), '1.0.0');
     }
 }
 
