@@ -24,7 +24,7 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
      */
     public function start_lvl( &$output, $depth = 0, $args = array() ) {
         $indent = str_repeat("\t", $depth);
-        $output .= "\n$indent<ul class=\"nav-item-children\">\n";
+        $output .= "\n$indent<ul class=\"sub-menu\">\n";
     }
 
     /**
@@ -33,14 +33,11 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
     function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
         $item_html = '';
-//        echo '<pre>';
-//        var_dump($item);
-//        echo '</pre>';
-
         if( '[divider]' === $item->title ) {
             $output .= '<li class="menu-item-divider"></li>';
             return;
         }
+
 
         if( !empty( $item->cms_megaprofile ) ) {
             $item->classes[] = 'megamenu megamenu-style-alt';
@@ -49,26 +46,16 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
         if( ! empty( $args->local_scroll ) && $depth === 0 ) {
             $item->classes[] = 'local-scroll' ;
         }
-
-//        if( !empty( $item->cms_icon ) ) {
-//            if( 'left' === $item->rella_icon_position ) {
-//                $args->old_link_before = $args->link_before;
-//                $args->link_before = '<span class="link-icon left-icon"><i class="'. esc_attr( $item->rella_icon ) .'"></i></span>' . $args->link_before;
-//            } else {
-//                $args->old_link_after = $args->link_after;
-//                $args->link_after = $args->link_after . '<span class="link-icon right-icon"><i class="'. esc_attr( $item->rella_icon ) .'"></i></span>';
-//            }
-//        }
-
-//        if( !empty( $args->caret_visibility ) && ( $item->hasChildren || !empty( $item->rella_megaprofile ) ) ) {
-//            $args->old_link_after = $args->link_after;
-//            $args->link_after = $args->link_after . '<i class="fa fa-caret-down"></i>';
-//        }
-
-//        if( !empty( $item->rella_badge ) ) {
-//            $args->old_link_after = $args->link_after;
-//            $args->link_after = $args->link_after . '<mark class="'. esc_attr( $item->rella_badge_style ) .'">'. esc_html( $item->rella_badge ) . '</mark>';
-//        }
+        $item->cms_icon_position = 'left';
+        if( !empty( $item->cms_icon ) ) {
+            if( 'left' === $item->cms_icon_position ) {
+                $args->old_link_before = $args->link_before;
+                $args->link_before = '<span class="link-icon left-icon"><i class="'. esc_attr( $item->cms_icon ) .'"></i></span>' . $args->link_before;
+            } else {
+                $args->old_link_after = $args->link_after;
+                $args->link_after = $args->link_after . '<span class="link-icon right-icon"><i class="'. esc_attr( $item->cms_icon ) .'"></i></span>';
+            }
+        }
 
         if( isset( $args->nav_style ) && 'onepage' === $args->nav_style ) {
             $item->classes[] = 'local-scroll';
@@ -76,18 +63,22 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
 
         parent::start_el( $item_html, $item, $depth, $args, $id );
 
-        if( !empty( $args->old_link_before ) ) {
+        if( isset( $args->old_link_before ) ) {
+
             $args->link_before = $args->old_link_before;
             $args->old_link_before = '';
         }
 
-        if( !empty( $args->old_link_after ) ) {
+        if( isset( $args->old_link_after ) ) {
             $args->link_after = $args->old_link_after;
             $args->old_link_after = '';
         }
 
         if( !empty( $item->cms_megaprofile ) ) {
             $item_html .= $this->get_megamenu( $item->cms_megaprofile );
+        }
+        if( !empty( $item->cms_onepage ) && 'yes' === $item->cms_onepage) {
+            $item->classes[] = 'local-scroll';
         }
 
         $output .= $item_html;
@@ -99,7 +90,7 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
 
         $css = $this->get_vc_custom_css( $id );
 
-        return $css . '<ul class="nav-item-children"><li><div class="container">' . $content . '</div></li></ul>';
+        return $css . '<ul class="sub-menu"><li><div class="container">' . $content . '</div></li></ul>';
     }
 
     public function get_vc_custom_css( $id ) {
