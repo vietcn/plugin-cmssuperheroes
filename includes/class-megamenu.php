@@ -87,6 +87,43 @@ class EFramework_MegaMenu_Register
         register_post_type('cms-mega-menu', $args);
     }
 
+
+    // Custom Fields - Add
+    function setup_nav_menu_item( $menu_item ) {
+
+        $menu_item->cms_megaprofile = get_post_meta( $menu_item->ID, '_menu_item_cms_megaprofile', true );
+        $menu_item->cms_icon = get_post_meta( $menu_item->ID, '_menu_item_cms_icon', true );
+        $menu_item->cms_onepage = get_post_meta( $menu_item->ID, '_menu_item_cms_onepage', true );
+
+        return $menu_item;
+    }
+
+    // Custom Fields - Save
+    function update_nav_menu_item( $menu_id, $menu_item_db_id, $menu_item_data ) {
+
+        if ( isset( $_REQUEST['menu-item-rella-megaprofile'][$menu_item_db_id]) ) {
+            update_post_meta($menu_item_db_id, '_menu_item_cms_megaprofile', $_REQUEST['menu-item-rella-megaprofile'][$menu_item_db_id]);
+        }
+        if ( isset( $_REQUEST['menu-item-rella-icon'][$menu_item_db_id]) ) {
+            update_post_meta($menu_item_db_id, '_menu_item_cms_icon', $_REQUEST['menu-item-rella-icon'][$menu_item_db_id]);
+        }
+
+        if ( isset( $_REQUEST['menu-item-rella-icon-position'][$menu_item_db_id]) ) {
+            update_post_meta($menu_item_db_id, '_menu_item_cms_onepage', $_REQUEST['menu-item-rella-icon-position'][$menu_item_db_id]);
+        }
+    }
+
+    // Custom Backend Walker - Edit
+    function edit_nav_menu_walker( $walker, $menu_id ) {
+
+        if ( ! class_exists( 'Rella_Mega_Menu_Edit_Walker' ) ) {
+            require_once( get_template_directory() . '/rella/extensions/mega-menu/rella-mega-menu-edit.php' );
+        }
+
+        return 'Rella_Mega_Menu_Edit_Walker';
+    }
+
+
     /**
      * Get instance of the class
      *
