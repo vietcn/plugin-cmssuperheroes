@@ -30,7 +30,7 @@ class EFramework_MegaMenu_Register
         add_filter('wp_setup_nav_menu_item', array($this, 'setup_nav_menu_item'));
 
         // Custom Fields - Save
-        add_action('wp_update_nav_menu_item', array($this, 'update_nav_menu_item'), 100, 3);
+//        add_action('wp_update_nav_menu_item', array($this, 'update_nav_menu_item'), 100, 3);
 
         // Custom Walker - Edit
         add_filter('wp_edit_nav_menu_walker', array($this, 'edit_nav_menu_walker'), 100, 2);
@@ -94,7 +94,6 @@ class EFramework_MegaMenu_Register
         $menu_item->cms_megaprofile = get_post_meta( $menu_item->ID, '_menu_item_cms_megaprofile', true );
         $menu_item->cms_icon = get_post_meta( $menu_item->ID, '_menu_item_cms_icon', true );
         $menu_item->cms_onepage = get_post_meta( $menu_item->ID, '_menu_item_cms_onepage', true );
-
         return $menu_item;
     }
 
@@ -116,11 +115,11 @@ class EFramework_MegaMenu_Register
     // Custom Backend Walker - Edit
     function edit_nav_menu_walker( $walker, $menu_id ) {
 
-        if ( ! class_exists( 'Rella_Mega_Menu_Edit_Walker' ) ) {
-            require_once( get_template_directory() . '/rella/extensions/mega-menu/rella-mega-menu-edit.php' );
+        if ( ! class_exists( 'EFramework_Mega_Menu_Edit_Walker' ) ) {
+            require_once( CMS_INCLUDES . 'class-mage-menu-edit.php' );
         }
 
-        return 'Rella_Mega_Menu_Edit_Walker';
+        return 'EFramework_Mega_Menu_Edit_Walker';
     }
 
 
