@@ -33,6 +33,9 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
     function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
         $item_html = '';
+//        echo '<pre>';
+//        var_dump($item);
+//        echo '</pre>';
 
         if( '[divider]' === $item->title ) {
             $output .= '<li class="menu-item-divider"></li>';
@@ -47,25 +50,25 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
             $item->classes[] = 'local-scroll' ;
         }
 
-        if( !empty( $item->cms_icon ) ) {
-            if( 'left' === $item->rella_icon_position ) {
-                $args->old_link_before = $args->link_before;
-                $args->link_before = '<span class="link-icon left-icon"><i class="'. esc_attr( $item->rella_icon ) .'"></i></span>' . $args->link_before;
-            } else {
-                $args->old_link_after = $args->link_after;
-                $args->link_after = $args->link_after . '<span class="link-icon right-icon"><i class="'. esc_attr( $item->rella_icon ) .'"></i></span>';
-            }
-        }
+//        if( !empty( $item->cms_icon ) ) {
+//            if( 'left' === $item->rella_icon_position ) {
+//                $args->old_link_before = $args->link_before;
+//                $args->link_before = '<span class="link-icon left-icon"><i class="'. esc_attr( $item->rella_icon ) .'"></i></span>' . $args->link_before;
+//            } else {
+//                $args->old_link_after = $args->link_after;
+//                $args->link_after = $args->link_after . '<span class="link-icon right-icon"><i class="'. esc_attr( $item->rella_icon ) .'"></i></span>';
+//            }
+//        }
 
-        if( !empty( $args->caret_visibility ) && ( $item->hasChildren || !empty( $item->rella_megaprofile ) ) ) {
-            $args->old_link_after = $args->link_after;
-            $args->link_after = $args->link_after . '<i class="fa fa-caret-down"></i>';
-        }
+//        if( !empty( $args->caret_visibility ) && ( $item->hasChildren || !empty( $item->rella_megaprofile ) ) ) {
+//            $args->old_link_after = $args->link_after;
+//            $args->link_after = $args->link_after . '<i class="fa fa-caret-down"></i>';
+//        }
 
-        if( !empty( $item->rella_badge ) ) {
-            $args->old_link_after = $args->link_after;
-            $args->link_after = $args->link_after . '<mark class="'. esc_attr( $item->rella_badge_style ) .'">'. esc_html( $item->rella_badge ) . '</mark>';
-        }
+//        if( !empty( $item->rella_badge ) ) {
+//            $args->old_link_after = $args->link_after;
+//            $args->link_after = $args->link_after . '<mark class="'. esc_attr( $item->rella_badge_style ) .'">'. esc_html( $item->rella_badge ) . '</mark>';
+//        }
 
         if( isset( $args->nav_style ) && 'onepage' === $args->nav_style ) {
             $item->classes[] = 'local-scroll';
@@ -83,8 +86,8 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
             $args->old_link_after = '';
         }
 
-        if( !empty( $item->rella_megaprofile ) ) {
-            $item_html .= $this->get_megamenu( $item->rella_megaprofile );
+        if( !empty( $item->cms_megaprofile ) ) {
+            $item_html .= $this->get_megamenu( $item->cms_megaprofile );
         }
 
         $output .= $item_html;
@@ -94,9 +97,36 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
         $post = get_post( $id );
         $content = do_shortcode( $post->post_content );
 
-        $css = rella_helper()->get_vc_custom_css( $id );
+        $css = $this->get_vc_custom_css( $id );
 
         return $css . '<ul class="nav-item-children"><li><div class="container">' . $content . '</div></li></ul>';
+    }
+
+    public function get_vc_custom_css( $id ) {
+
+        $out = '';
+
+        if ( ! $id ) {
+            return;
+        }
+
+        $post_custom_css = get_post_meta( $id, '_wpb_post_custom_css', true );
+        if ( ! empty( $post_custom_css ) ) {
+            $post_custom_css = strip_tags( $post_custom_css );
+            $out .= '<style type="text/css" data-type="vc_custom-css">';
+            $out .= $post_custom_css;
+            $out .= '</style>';
+        }
+
+        $shortcodes_custom_css = get_post_meta( $id, '_wpb_shortcodes_custom_css', true );
+        if ( ! empty( $shortcodes_custom_css ) ) {
+            $shortcodes_custom_css = strip_tags( $shortcodes_custom_css );
+            $out .= '<style type="text/css" data-type="vc_shortcodes-custom-css">';
+            $out .= $shortcodes_custom_css;
+            $out .= '</style>';
+        }
+
+        return $out;
     }
 
     function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {

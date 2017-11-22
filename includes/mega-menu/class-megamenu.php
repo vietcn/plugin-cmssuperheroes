@@ -119,7 +119,7 @@ class EFramework_MegaMenu_Register
     // Custom Backend Walker - Edit
     function edit_nav_menu_walker( $walker, $menu_id ) {
         if ( ! class_exists( 'EFramework_Mega_Menu_Edit_Walker' ) ) {
-            require_once( CMS_INCLUDES . 'mega-menu/class-mage-menu-edit.php' );
+            require_once( CMS_INCLUDES . 'mega-menu/class-mega-menu-edit.php' );
         }
 
         return 'EFramework_Mega_Menu_Edit_Walker';
