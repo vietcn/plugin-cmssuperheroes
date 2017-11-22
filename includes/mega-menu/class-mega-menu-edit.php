@@ -49,13 +49,13 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
 
         <?php if( 0 === $depth ) : ?>
             <p class="description description-wide">
-                <label for="edit-menu-item-rella-megaprofile-<?php echo esc_attr( $item_id ); ?>">
+                <label for="edit-menu-item-cms-megaprofile-<?php echo esc_attr( $item_id ); ?>">
                     <?php esc_html_e( 'Select Mega Menu', 'cmssuperheroes' ); ?><br />
-                    <select id="edit-menu-item-rella-megaprofile-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-rella-megaprofile[<?php echo esc_attr( $item_id ); ?>]">
+                    <select id="edit-menu-item-cms-megaprofile-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-cms-megaprofile[<?php echo esc_attr( $item_id ); ?>]">
                         <option value="0"><?php esc_html_e( 'None', 'cmssuperheroes' ) ?></option>
                         <?php
                         $r = $this->walker_args;
-                        $r['selected'] = $item->rella_megaprofile;
+                        $r['selected'] = $item->cms_megaprofile;
                         echo walk_page_dropdown_tree( $this->megamenus, $r['depth'], $r );
                         ?>
                     </select>
@@ -67,16 +67,26 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
             <label for="edit-menu-item-cms-icon-<?php echo esc_attr( $item_id ); ?>">
                 <?php esc_html_e( 'Icon', 'cmssuperheroes' ); ?><br />
                 <select id="edit-menu-item-cms-icon-<?php echo esc_attr( $item_id ); ?>" class="widefat cms-icon-picker" name="menu-item-cms-icon[<?php echo esc_attr( $item_id ); ?>]">
-                    <option value="" <?php selected( '', esc_attr( $item->rella_icon ) ) ?>><?php esc_html_e( 'No Icons', 'cmssuperheroes' ) ?></option>
+                    <option value="" <?php selected( '', esc_attr( $item->cms_icon ) ) ?>><?php esc_html_e( 'No Icons', 'cmssuperheroes' ) ?></option>
                     <?php $arr = $this->cms_iconpicker_fontawesome();
                     foreach ( $arr as $group => $icons ) { 	?>
                         <optgroup label="<?php echo esc_attr( $group ); ?>">
                             <?php foreach ( $icons as $key => $label ) {
                                 $class_key = key( $label ); ?>
-                                <option value="<?php echo esc_attr( $class_key ); ?>" <?php selected( $class_key, esc_attr( $item->rella_icon ) ) ?>><?php echo esc_html( current( $label ) ); ?></option>
+                                <option value="<?php echo esc_attr( $class_key ); ?>" <?php selected( $class_key, esc_attr( $item->cms_icon ) ) ?>><?php echo esc_html( current( $label ) ); ?></option>
                             <?php } ?>
                         </optgroup>
                     <?php } ?>
+                </select>
+            </label>
+        </p>
+
+        <p class="description description-wide">
+            <label for="menu-item-cms-onepage<?php echo esc_attr( $item_id ); ?>">
+                <?php esc_html_e( 'One page', 'cmssuperheroes' ); ?><br />
+                <select id="menu-item-cms-onepage-<?php echo esc_attr( $item_id ); ?>" class="widefat menu-item-cms-onepage" name="menu-item-cms-onepage[<?php echo esc_attr( $item_id ); ?>]">
+                    <option value="yes" <?php selected( '', esc_attr( $item->cms_onepage ) ) ?>><?php esc_html_e( 'Yes', 'cmssuperheroes' ) ?></option>
+                    <option value="no" <?php selected( '', esc_attr( $item->cms_onepage ) ) ?>><?php esc_html_e( 'No', 'cmssuperheroes' ) ?></option>
                 </select>
             </label>
         </p>

@@ -6,7 +6,10 @@
  * @author  KP
  *
  */
-
+if(!defined('ABSPATH')){
+    die();
+}
+require_once( CMS_INCLUDES.'mega-menu/class-megamenu-walker.php');
 class EFramework_MegaMenu_Register
 {
     /**
@@ -31,7 +34,7 @@ class EFramework_MegaMenu_Register
         add_filter('wp_setup_nav_menu_item', array($this, 'setup_nav_menu_item'));
 
         // Custom Fields - Save
-//        add_action('wp_update_nav_menu_item', array($this, 'update_nav_menu_item'), 100, 3);
+        add_action('wp_update_nav_menu_item', array($this, 'update_nav_menu_item'), 100, 3);
 
         // Custom Walker - Edit
         add_filter('wp_edit_nav_menu_walker', array($this, 'edit_nav_menu_walker'), 100, 2);
@@ -101,22 +104,22 @@ class EFramework_MegaMenu_Register
     // Custom Fields - Save
     function update_nav_menu_item( $menu_id, $menu_item_db_id, $menu_item_data ) {
 
-        if ( isset( $_REQUEST['menu-item-rella-megaprofile'][$menu_item_db_id]) ) {
-            update_post_meta($menu_item_db_id, '_menu_item_cms_megaprofile', $_REQUEST['menu-item-rella-megaprofile'][$menu_item_db_id]);
+        if ( isset( $_REQUEST['menu-item-cms-megaprofile'][$menu_item_db_id]) ) {
+            update_post_meta($menu_item_db_id, '_menu_item_cms_megaprofile', $_REQUEST['menu-item-cms-megaprofile'][$menu_item_db_id]);
         }
-        if ( isset( $_REQUEST['menu-item-rella-icon'][$menu_item_db_id]) ) {
-            update_post_meta($menu_item_db_id, '_menu_item_cms_icon', $_REQUEST['menu-item-rella-icon'][$menu_item_db_id]);
+        if ( isset( $_REQUEST['menu-item-cms-icon'][$menu_item_db_id]) ) {
+            update_post_meta($menu_item_db_id, '_menu_item_cms_icon', $_REQUEST['menu-item-cms-icon'][$menu_item_db_id]);
         }
 
-        if ( isset( $_REQUEST['menu-item-rella-icon-position'][$menu_item_db_id]) ) {
-            update_post_meta($menu_item_db_id, '_menu_item_cms_onepage', $_REQUEST['menu-item-rella-icon-position'][$menu_item_db_id]);
+        if ( isset( $_REQUEST['menu-item-cms-onepage'][$menu_item_db_id]) ) {
+            update_post_meta($menu_item_db_id, '_menu_item_cms_onepage', $_REQUEST['menu-item-cms-onepage'][$menu_item_db_id]);
         }
     }
 
     // Custom Backend Walker - Edit
     function edit_nav_menu_walker( $walker, $menu_id ) {
         if ( ! class_exists( 'EFramework_Mega_Menu_Edit_Walker' ) ) {
-            require_once( CMS_INCLUDES . 'class-mage-menu-edit.php' );
+            require_once( CMS_INCLUDES . 'mega-menu/class-mage-menu-edit.php' );
         }
 
         return 'EFramework_Mega_Menu_Edit_Walker';

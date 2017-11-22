@@ -56,7 +56,7 @@ class CmssuperheroesCore
         }
 
         if (!class_exists('EFramework_MegaMenu_Register')) {
-            require_once CMS_INCLUDES .'class-megamenu.php';
+            require_once CMS_INCLUDES .'mega-menu/class-megamenu.php';
             EFramework_MegaMenu_Register::get_instance();
         }
 
