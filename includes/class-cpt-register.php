@@ -117,7 +117,7 @@ class EFramework_CPT_Register
                 'revisions'
             )
         ));
-        register_post_type('cmsportfolio', $args);
+        register_post_type('cms-portfolio', $args);
     }
 
     /**

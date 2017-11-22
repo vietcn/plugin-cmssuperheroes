@@ -74,7 +74,7 @@ class EFramework_CTax_Register
             'show_in_menu' => true
         );
         
-        register_taxonomy('cmsportfolio-category', array('cmsportfolio'), $categories);
+        register_taxonomy('cmsportfolio-category', array('cms-portfolio'), $categories);
     }
 
     /**
