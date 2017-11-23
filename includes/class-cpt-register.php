@@ -49,7 +49,7 @@ class EFramework_CPT_Register
     }
 
     /**
-     * Registers portfolio post type, this fuction should be called in an init hook function.
+     * Registers portfolio post type, this function should be called in an init hook function.
      * @uses $wp_post_types Inserts new post type object into the list
      *
      * @access protected
