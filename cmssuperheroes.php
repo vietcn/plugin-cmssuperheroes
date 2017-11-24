@@ -41,6 +41,7 @@ class CmssuperheroesCore
         /**
          * Init function, which is run on site init and plugin loaded
          */
+        add_action('init', array($this, 'cmsInit'));
         add_action('plugins_loaded', array($this, 'cmsActionInit'));
         add_filter('style_loader_tag', array($this, 'cmsValidateStylesheet'));
 
@@ -51,13 +52,18 @@ class CmssuperheroesCore
         }
 
         if (!class_exists('EFramework_CTax_Register')) {
-            require_once CMS_INCLUDES .'class-ctax-register.php';
+            require_once CMS_INCLUDES . 'class-ctax-register.php';
             EFramework_CTax_Register::get_instance();
         }
 
         if (!class_exists('EFramework_MegaMenu_Register')) {
-            require_once CMS_INCLUDES .'mega-menu/class-megamenu.php';
+            require_once CMS_INCLUDES . 'mega-menu/class-megamenu.php';
             EFramework_MegaMenu_Register::get_instance();
+        }
+
+
+        if (!class_exists('EFramework_menu_handle')) {
+            require_once CMS_INCLUDES . 'class-menu-hanlde.php';
         }
 
         /**
@@ -89,6 +95,16 @@ class CmssuperheroesCore
         if (!class_exists('WP_Filesystem')) {
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             WP_Filesystem();
+        }
+    }
+
+    function cmsInit()
+    {
+        if (apply_filters('abtheme_scssc_on', false)) {
+            // scss compiler library
+            if (!class_exists('scssc')) {
+                require_once CMS_LIBRARIES . 'scss.inc.php';
+            }
         }
     }
 
