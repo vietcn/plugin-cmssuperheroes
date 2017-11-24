@@ -69,7 +69,6 @@ if (!class_exists('EFramework_menu_handle')) {
             /**
              * Add "Theme Name" parent node
              */
-            $opt_name = abtheme_get_opt_name();
             $args = array(
                 'id'    => $theme->get("TextDomain"),
                 'title' => '<span class="ab-icon dashicons-smiley"></span>' . $theme->get("Name"),
