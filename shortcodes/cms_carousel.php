@@ -88,6 +88,7 @@ vc_map(
 	            	"True" => "true",
 	            	"False" => "false"
 	            	),
+                "std" => false,
 	            "group" => __("Carousel Settings", CMS_NAME)
 	        ),
 	        array(
@@ -108,14 +109,14 @@ vc_map(
 	            "description" => __("",CMS_NAME),
 	            "group" => __("Carousel Settings", CMS_NAME)
 	        ),
-	    	array(
-	            "type" => "cms_template",
-	            "param_name" => "cms_template",
-	            "shortcode" => "cms_carousel",
-	            "admin_label" => true,
-	            "heading" => __("Shortcode Template",CMS_NAME),
-	            "group" => __("Template", CMS_NAME),
-	        )
+            array(
+                'type' => 'cms_template_img',
+                'param_name' => 'cms_template',
+                "shortcode" => "cms_carousel",
+                "heading" => esc_html__("Shortcode Template",'abtheme'),
+                "admin_label" => true,
+                "group" => esc_html__("Template", 'abtheme'),
+            ),
 	    )
 	)
 );
@@ -164,5 +165,4 @@ class WPBakeryShortCode_cms_carousel extends CmsShortCode{
 		return parent::content($atts, $content);
 	}
 }
-
 ?>
