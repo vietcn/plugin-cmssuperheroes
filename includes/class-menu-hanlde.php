@@ -30,9 +30,6 @@ if (!class_exists('EFramework_menu_handle')) {
 
             add_action('admin_bar_menu', array($this, 'abtheme_add_admin_bar_menu'), 100);
 
-            add_filter('abtheme_export_mode', function () {
-                return true;
-            });
         }
 
         public function abtheme_add_menu()
@@ -41,26 +38,11 @@ if (!class_exists('EFramework_menu_handle')) {
 
             add_submenu_page($this->theme_text_domain, $this->theme_name, esc_html__('Dashboard', 'abtheme'), 'manage_options', $this->theme_text_domain, array($this, 'abtheme_create_theme_dashboard'));
 
-            if (is_plugin_active('theme-core-import-export/theme-core-import-export.php')) {
-                add_submenu_page($this->theme_text_domain, esc_html__('Import Demos', 'abtheme'), esc_html__('Import Demos', 'abtheme'), 'manage_options', 'abtheme-import', array($this, 'abtheme_import_demo_page'));
-            }
-
         }
 
         public function abtheme_create_theme_dashboard()
         {
             include_once abtheme()->path('APP_DIR', 'templates/dashboard/dashboard.php');
-        }
-
-        public function abtheme_import_demo_page()
-        {
-            $export_mode = $this->abtheme_enable_export_mode();
-            include_once abtheme()->path('APP_DIR', 'templates/dashboard/import-page.php');
-        }
-
-        function abtheme_enable_export_mode()
-        {
-            return apply_filters('abtheme_export_mode', false);
         }
 
         function abtheme_add_admin_bar_menu($wp_admin_bar)
@@ -99,9 +81,9 @@ if (!class_exists('EFramework_menu_handle')) {
              */
             if (is_plugin_active('theme-core-import-export/theme-core-import-export.php')) {
                 $args = array(
-                    'id'     => 'abtheme-import',
+                    'id'     => 'theme-core-import',
                     'title'  => esc_html__('Import Demos', 'abtheme'),
-                    'href'   => admin_url('admin.php?page=abtheme-import'),
+                    'href'   => admin_url('admin.php?page=theme-core-import'),
                     'parent' => $theme->get("TextDomain"),
                     'meta'   => array(
                         'class' => '',
