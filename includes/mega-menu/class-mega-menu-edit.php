@@ -80,7 +80,7 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
                 </select>
             </label>
         </p>
-        
+
         <p class="description description-wide">
             <label for="menu-item-cms-onepage<?php echo esc_attr( $item_id ); ?>">
                 <?php esc_html_e( 'One page', 'cmssuperheroes' ); ?><br />

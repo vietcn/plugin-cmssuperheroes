@@ -25,7 +25,7 @@ if (!class_exists('EFramework_enqueue_scripts')) {
                     $id = esc_attr(wp_unslash(intval($_REQUEST['post'])));
                     $post_format = get_post_format($id);
                 }
-                wp_enqueue_script('post-format.js', cmssuperheroes()->path('APP_URL') . '/assets/js/post-format'.Redux_Functions::isMin().'.js', '', 'all', true);
+                wp_enqueue_script('post-format.js', cmssuperheroes()->path('APP_URL') . '/assets/js/post-format'.cmssuperheroes()->is_min().'.js', '', 'all', true);
                 wp_localize_script('post-format.js', 'post_format', $post_format);
             }
         }

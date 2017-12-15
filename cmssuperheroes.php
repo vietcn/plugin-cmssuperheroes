@@ -59,8 +59,8 @@ class CmssuperheroesCore
 
     public function __construct()
     {
-        $dir = untrailingslashit( plugin_dir_path( __FILE__ ) );
-        $url = untrailingslashit( plugin_dir_url( __FILE__ ) );
+        $dir = untrailingslashit(plugin_dir_path(__FILE__));
+        $url = untrailingslashit(plugin_dir_url(__FILE__));
 
         $this->set_paths(array(
             'APP_DIR' => $dir,
@@ -74,16 +74,13 @@ class CmssuperheroesCore
         add_action('plugins_loaded', array($this, 'cmsActionInit'));
         add_filter('style_loader_tag', array($this, 'cmsValidateStylesheet'));
         register_activation_hook(__FILE__, array($this, 'activation_hook'));
-        
-        if ( ! class_exists( 'ReduxFramework' ) )
-        {
-            add_action( 'admin_notices', array( $this, 'redux_framework_notice' ) );
-        }
-        else
-        {
+
+        if (!class_exists('ReduxFramework')) {
+            add_action('admin_notices', array($this, 'redux_framework_notice'));
+        } else {
             // Late at 30 to be sure that other extensions available via same hook.
             // Eg: Load extensions at 29 or lower.
-            add_action( "redux/extensions/before", array( $this, 'redux_extensions' ), 30 );
+            add_action("redux/extensions/before", array($this, 'redux_extensions'), 30);
         }
         if (!class_exists('EFramework_enqueue_scripts')) {
             require_once $this->path('APP_DIR', 'includes/class-enqueue-scripts.php');
@@ -243,7 +240,7 @@ class CmssuperheroesCore
      *
      * @param array $paths
      */
-    protected function set_paths( $paths = array() )
+    protected function set_paths($paths = array())
     {
         $this->paths = $paths;
     }
@@ -259,9 +256,9 @@ class CmssuperheroesCore
      *
      * @return string
      */
-    function path( $name, $file = '' )
+    function path($name, $file = '')
     {
-        return $this->paths[ $name ] . ( strlen( $file ) > 0 ? '/' . preg_replace( '/^\//', '', $file ) : '' );
+        return $this->paths[$name] . (strlen($file) > 0 ? '/' . preg_replace('/^\//', '', $file) : '');
     }
 
     /**
@@ -273,9 +270,9 @@ class CmssuperheroesCore
      * @param  string $file - filename
      * @return string
      */
-    function get_url( $file = '' )
+    function get_url($file = '')
     {
-        return esc_url( $this->path( 'APP_URL', $file ) );
+        return esc_url($this->path('APP_URL', $file));
     }
 
     /**
@@ -284,12 +281,23 @@ class CmssuperheroesCore
      * @param  string $default
      * @return string
      */
-    function get_template( $file, $default ) {
-        $path = locate_template( $file );
-        if ( $path ) {
+    function get_template($file, $default)
+    {
+        $path = locate_template($file);
+        if ($path) {
             return $path;
         }
         return $default;
+    }
+
+    function is_min()
+    {
+        $dev_mode = defined('WP_DEBUG') && WP_DEBUG;
+        if ($dev_mode) {
+            return '';
+        } else {
+            return '.min';
+        }
     }
 
 
@@ -367,25 +375,21 @@ class CmssuperheroesCore
      * @since 1.0
      * @param  ReduxFramework $redux
      */
-    function redux_extensions( $redux )
+    function redux_extensions($redux)
     {
-        if ( ! class_exists( 'EFramework_Post_Metabox' ) )
-        {
-            require_once $this->path( 'APP_DIR', 'includes/class-post-metabox.php' );
+        if (!class_exists('EFramework_Post_Metabox')) {
+            require_once $this->path('APP_DIR', 'includes/class-post-metabox.php');
 
-            if ( empty( $this->post_metabox ) )
-            {
-                $this->post_metabox = new EFramework_Post_Metabox( $redux );
+            if (empty($this->post_metabox)) {
+                $this->post_metabox = new EFramework_Post_Metabox($redux);
             }
         }
 
-        if ( ! class_exists( 'EFramework_Taxonomy_Metabox' ) )
-        {
-            require_once $this->path( 'APP_DIR', 'includes/class-taxonomy-metabox.php' );
+        if (!class_exists('EFramework_Taxonomy_Metabox')) {
+            require_once $this->path('APP_DIR', 'includes/class-taxonomy-metabox.php');
 
-            if ( empty( $this->taxonomy_metabox ) )
-            {
-                $this->taxonomy_metabox = new EFramework_Taxonomy_Metabox( $redux );
+            if (empty($this->taxonomy_metabox)) {
+                $this->taxonomy_metabox = new EFramework_Taxonomy_Metabox($redux);
             }
         }
     }
@@ -398,8 +402,7 @@ class CmssuperheroesCore
      */
     public static function get_instance()
     {
-        if ( ! ( self::$_instance instanceof self ) )
-        {
+        if (!(self::$_instance instanceof self)) {
             self::$_instance = new self();
         }
 

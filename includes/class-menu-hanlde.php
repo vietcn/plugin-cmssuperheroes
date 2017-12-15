@@ -92,21 +92,24 @@ if (!class_exists('EFramework_menu_handle')) {
                 );
                 $wp_admin_bar->add_node($args);
             }
-
             /**
              * Add Theme options children node
              */
-            $args = array(
-                'id'     => 'theme-options',
-                'title'  => esc_html__('Theme Options', CMS_TEXT_DOMAIN),
-                'href'   => admin_url('admin.php?page=theme-options'),
-                'parent' => $theme->get("TextDomain"),
-                'meta'   => array(
-                    'class' => '',
-                    'title' => esc_html__('Import Demos', CMS_TEXT_DOMAIN),
-                )
-            );
-            $wp_admin_bar->add_node($args);
+            if ( class_exists( 'ReduxFramework' ) ){
+                $args = array(
+                    'id'     => 'theme-options',
+                    'title'  => esc_html__('Theme Options', CMS_TEXT_DOMAIN),
+                    'href'   => admin_url('admin.php?page=theme-options'),
+                    'parent' => $theme->get("TextDomain"),
+                    'meta'   => array(
+                        'class' => '',
+                        'title' => esc_html__('Import Demos', CMS_TEXT_DOMAIN),
+                    )
+                );
+                $wp_admin_bar->add_node($args);
+            }
+
+
         }
     }
 }
