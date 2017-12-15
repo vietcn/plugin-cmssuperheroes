@@ -89,7 +89,7 @@ class EFramework_Taxonomy_Metabox
         $this->default_args = $redux->args;
         $this->optimize_default_args();
 
-        do_action( 'abtheme_taxonomy_metabox_register', $this );
+        do_action( 'cms_taxonomy_metabox_register', $this );
 
         if ( empty( $this->taxonomies ) || empty( $this->panels ) )
         {
@@ -115,12 +115,12 @@ class EFramework_Taxonomy_Metabox
 
         if ( 'term.php' == $pagenow )
         {
-            $this->notices = get_transient( 'abtheme-taxonomy-metabox-transients' );
+            $this->notices = get_transient( 'cms-taxonomy-metabox-transients' );
 
             // If the transient exists then we override it with an empty value
             if ( false !== $this->notices )
             {
-                set_transient( 'abtheme-taxonomy-metabox-transients', '' );
+                set_transient( 'cms-taxonomy-metabox-transients', '' );
             }
             else
             {
@@ -231,8 +231,8 @@ class EFramework_Taxonomy_Metabox
      */
     protected function optimize_default_args()
     {
-        $this->default_args['opt_name'] = isset( $this->default_args['opt_name'] ) ? $this->default_args['opt_name'] . '_taxonomy_metabox' : 'abtheme_taxonomy_metabox';
-        $this->default_args['display_name'] = esc_html__( 'Settings', 'abtheme' );
+        $this->default_args['opt_name'] = isset( $this->default_args['opt_name'] ) ? $this->default_args['opt_name'] . '_taxonomy_metabox' : 'cms_taxonomy_metabox';
+        $this->default_args['display_name'] = esc_html__( 'Settings', CMS_TEXT_DOMAIN );
         $this->default_args['open_expanded'] = true;
         $this->default_args['footer_credit'] = '';
         $this->default_args['admin_bar'] = false;
@@ -277,7 +277,7 @@ class EFramework_Taxonomy_Metabox
 
             if ( in_array( $field['id'], $this->field_ids[ $taxonomy ] ) )
             {
-                trigger_error( sprintf( esc_html__( 'The field with id %1$s for taxonomy %2$s is already registered.', 'abtheme' ), esc_html( $field['id'], 'abtheme' ), esc_html( $taxonomy, 'abtheme') ) );
+                trigger_error( sprintf( esc_html__( 'The field with id %1$s for taxonomy %2$s is already registered.', CMS_TEXT_DOMAIN ), esc_html( $field['id'], CMS_TEXT_DOMAIN ), esc_html( $taxonomy, CMS_TEXT_DOMAIN) ) );
                 unset( $section['fields'][ $fkey ] );
                 continue;
             }
@@ -294,7 +294,7 @@ class EFramework_Taxonomy_Metabox
         {
             if ( $this->section_exist( $section['id'], $taxonomy ) )
             {
-                trigger_error( sprintf( esc_html__( 'Section %1$s for taxonomy %2$s is already exist.', 'abtheme' ), esc_html( $field['id'] ), esc_html( $taxonomy ) ) );
+                trigger_error( sprintf( esc_html__( 'Section %1$s for taxonomy %2$s is already exist.', CMS_TEXT_DOMAIN ), esc_html( $field['id'] ), esc_html( $taxonomy ) ) );
                 return;
             }
             else
@@ -392,7 +392,7 @@ class EFramework_Taxonomy_Metabox
      */
     protected function generate_panel( $sections, $args )
     {
-        wp_nonce_field( 'abtheme_taxonomy_metabox_nonce_action', 'abtheme_taxonomy_metabox_nonce' );
+        wp_nonce_field( 'cms_taxonomy_metabox_nonce_action', 'cms_taxonomy_metabox_nonce' );
         $redux = new ReduxFramework( $sections, $args );
         $redux->_register_settings();
         $redux->_enqueue();
@@ -458,13 +458,13 @@ class EFramework_Taxonomy_Metabox
             return;
         }
 
-        wp_enqueue_style( 'abtheme-metabox', abtheme()->path( 'APP_URL' ) . '/assets/css/metabox' . Redux_Functions::isMin() . '.css', array(), self::$version, 'all' );
-        wp_enqueue_script( 'abtheme-metabox', abtheme()->path( 'APP_URL' ) . '/assets/js/metabox' . Redux_Functions::isMin() . '.js', array( 'jquery', 'redux-js' ), self::$version, 'all' );
+        wp_enqueue_style( 'cms-metabox', abtheme()->path( 'APP_URL' ) . '/assets/css/metabox' . Redux_Functions::isMin() . '.css', array(), self::$version, 'all' );
+        wp_enqueue_script( 'cms-metabox', abtheme()->path( 'APP_URL' ) . '/assets/js/metabox' . Redux_Functions::isMin() . '.js', array( 'jquery', 'redux-js' ), self::$version, 'all' );
 
         if ( 'term.php' == $pagenow )
         {
             wp_localize_script(
-                'abtheme-metabox',
+                'cms-metabox',
                 'EFrameworkMetaboxLocalize',
                 $this->localize_script
             );
@@ -647,7 +647,7 @@ class EFramework_Taxonomy_Metabox
 
         $opt_name = $this->panels[$taxonomy]['args']['opt_name'];
 
-        if ( empty( $_POST[ $opt_name ] ) || empty( $_POST[ 'abtheme_taxonomy_metabox_nonce' ] ) || ! wp_verify_nonce( $_POST['abtheme_taxonomy_metabox_nonce'], 'abtheme_taxonomy_metabox_nonce_action' ) )
+        if ( empty( $_POST[ $opt_name ] ) || empty( $_POST[ 'cms_taxonomy_metabox_nonce' ] ) || ! wp_verify_nonce( $_POST['cms_taxonomy_metabox_nonce'], 'cms_taxonomy_metabox_nonce_action' ) )
         {
             return;
         }
@@ -719,7 +719,7 @@ class EFramework_Taxonomy_Metabox
                     $notices['warnings'] = array();
                 }
 
-                set_transient( 'abtheme-taxonomy-metabox-transients', $notices );
+                set_transient( 'cms-taxonomy-metabox-transients', $notices );
             }
         }
     }
@@ -738,9 +738,9 @@ class EFramework_Taxonomy_Metabox
         {
             echo '<div class="notice notice-warning is-dismissible">';
             echo '<p>';
-            esc_html_e( 'All invalid custom field values for newly created term or existing term will not be saved, if you are missing something, please check field descriptions for instructions how to input valid values.', 'abtheme' );
+            esc_html_e( 'All invalid custom field values for newly created term or existing term will not be saved, if you are missing something, please check field descriptions for instructions how to input valid values.', CMS_TEXT_DOMAIN );
             echo '</p>';
-            printf( '<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__( 'Dismiss this notice.', 'abtheme' ) );
+            printf( '<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__( 'Dismiss this notice.', CMS_TEXT_DOMAIN ) );
             echo '</div>';
         }
 
@@ -750,8 +750,8 @@ class EFramework_Taxonomy_Metabox
             printf(
                 '<strong>%1$s %2$s</strong> %3$s',
                 esc_html( count( $this->notices['errors'] ) ),
-                esc_html__( 'error(s)', 'abtheme' ),
-                esc_html__( 'were found! Some data might not be saved.', 'abtheme' )
+                esc_html__( 'error(s)', CMS_TEXT_DOMAIN ),
+                esc_html__( 'were found! Some data might not be saved.', CMS_TEXT_DOMAIN )
             );
             echo '</p></div>';
         }
@@ -763,12 +763,12 @@ class EFramework_Taxonomy_Metabox
             printf(
                 '<strong>%1$s %2$s</strong> %3$s',
                 esc_html( count( $this->notices['warnings'] ) ),
-                esc_html__( 'warning(s)', 'abtheme' ),
-                esc_html__( 'were found! Some data might not be saved.', 'abtheme' )
+                esc_html__( 'warning(s)', CMS_TEXT_DOMAIN ),
+                esc_html__( 'were found! Some data might not be saved.', CMS_TEXT_DOMAIN )
             );
 
             echo '</p>';
-            printf( '<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__( 'Dismiss this notice.', 'abtheme' ) );
+            printf( '<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__( 'Dismiss this notice.', CMS_TEXT_DOMAIN ) );
             echo '</div>';
         }
     }
@@ -827,6 +827,6 @@ class EFramework_Taxonomy_Metabox
             return;
         }
 
-        echo '<style type="text/css" id="abtheme-' . $taxonomy . '-dynamic-css">' . $redux->outputCSS . '</style>';
+        echo '<style type="text/css" id="cms-' . $taxonomy . '-dynamic-css">' . $redux->outputCSS . '</style>';
     }
 }

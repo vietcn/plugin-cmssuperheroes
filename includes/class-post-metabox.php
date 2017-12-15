@@ -120,11 +120,11 @@ class EFramework_Post_Metabox
         global $pagenow;
 
         if ('post.php' == $pagenow) {
-            $this->notices = get_transient('abtheme-post-metabox-transients');
+            $this->notices = get_transient('cms-post-metabox-transients');
 
             // If the transient exists then we override it with an empty value
             if (false !== $this->notices) {
-                set_transient('abtheme-post-metabox-transients', '');
+                set_transient('cms-post-metabox-transients', '');
             } else {
                 $this->notices = maybe_unserialize($this->notices);
             }
@@ -464,11 +464,11 @@ class EFramework_Post_Metabox
 //        }
 //        die();
 
-        wp_enqueue_style('abtheme-metabox', abtheme()->path('APP_URL') . '/assets/css/metabox' . Redux_Functions::isMin() . '.css', array(), self::$version, 'all');
-        wp_enqueue_script('abtheme-metabox', abtheme()->path('APP_URL') . '/assets/js/metabox' . Redux_Functions::isMin() . '.js', array('jquery', 'redux-js'), self::$version, 'all');
+        wp_enqueue_style('cms-metabox', cmssuperheroes()->path('APP_URL') . '/assets/css/metabox' . Redux_Functions::isMin() . '.css', array(), self::$version, 'all');
+        wp_enqueue_script('cms-metabox', cmssuperheroes()->path('APP_URL') . '/assets/js/metabox' . Redux_Functions::isMin() . '.js', array('jquery', 'redux-js'), self::$version, 'all');
 
         wp_localize_script(
-            'abtheme-metabox',
+            'cms-metabox',
             'EFrameworkMetaboxLocalize',
             $this->localize_script
         );
@@ -483,7 +483,7 @@ class EFramework_Post_Metabox
      */
     function panel_template()
     {
-        return abtheme()->path('APP_DIR') . '/templates/panel';
+        return cmssuperheroes()->path('APP_DIR') . '/templates/panel';
     }
 
     /**
@@ -792,7 +792,7 @@ class EFramework_Post_Metabox
                 $notices['warnings'] = array();
             }
 
-            set_transient('abtheme-post-metabox-transients', $notices);
+            set_transient('cms-post-metabox-transients', $notices);
         }
     }
 
@@ -882,7 +882,7 @@ class EFramework_Post_Metabox
 
         printf(
             '<style type="text/css" id="%1$s">%2$s</style>',
-            esc_attr('abtheme-' . $post->post_type . '-dynamic-css'),
+            esc_attr('cms-' . $post->post_type . '-dynamic-css'),
             $redux->outputCSS
         );
     }
