@@ -80,13 +80,13 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
                 </select>
             </label>
         </p>
-
+        
         <p class="description description-wide">
             <label for="menu-item-cms-onepage<?php echo esc_attr( $item_id ); ?>">
                 <?php esc_html_e( 'One page', 'cmssuperheroes' ); ?><br />
                 <select id="menu-item-cms-onepage-<?php echo esc_attr( $item_id ); ?>" class="widefat menu-item-cms-onepage" name="menu-item-cms-onepage[<?php echo esc_attr( $item_id ); ?>]">
-                    <option value="yes" <?php selected( '', esc_attr( $item->cms_onepage ) ) ?>><?php esc_html_e( 'Yes', 'cmssuperheroes' ) ?></option>
-                    <option value="no" <?php selected( '', esc_attr( $item->cms_onepage ) ) ?>><?php esc_html_e( 'No', 'cmssuperheroes' ) ?></option>
+                    <option value="yes" <?php selected( esc_attr( $item->cms_onepage ), 'yes' ) ?>><?php esc_html_e( 'Yes', 'cmssuperheroes' ) ?></option>
+                    <option value="no" <?php selected( esc_attr( $item->cms_onepage ),  'no') ?>><?php esc_html_e( 'No', 'cmssuperheroes' ) ?></option>
                 </select>
             </label>
         </p>

@@ -26,26 +26,26 @@ if (!class_exists('EFramework_menu_handle')) {
             $this->theme_name = $current_theme->get('Name');
             $this->theme_text_domain = $current_theme->get('TextDomain');
 
-            add_action('admin_menu', array($this, 'abtheme_add_menu'));
+            add_action('admin_menu', array($this, 'cms_add_menu'));
 
-            add_action('admin_bar_menu', array($this, 'abtheme_add_admin_bar_menu'), 100);
+            add_action('admin_bar_menu', array($this, 'cms_add_admin_bar_menu'), 100);
 
         }
 
-        public function abtheme_add_menu()
+        public function cms_add_menu()
         {
-            add_menu_page($this->theme_name, $this->theme_name, 'manage_options', $this->theme_text_domain, array($this, 'abtheme_create_theme_dashboard'), 'dashicons-admin-generic', 3);
+            add_menu_page($this->theme_name, $this->theme_name, 'manage_options', $this->theme_text_domain, array($this, 'cms_create_theme_dashboard'), 'dashicons-admin-generic', 3);
 
-            add_submenu_page($this->theme_text_domain, $this->theme_name, esc_html__('Dashboard', 'abtheme'), 'manage_options', $this->theme_text_domain, array($this, 'abtheme_create_theme_dashboard'));
+            add_submenu_page($this->theme_text_domain, $this->theme_name, esc_html__('Dashboard', CMS_TEXT_DOMAIN), 'manage_options', $this->theme_text_domain, array($this, 'cms_create_theme_dashboard'));
 
         }
 
-        public function abtheme_create_theme_dashboard()
+        public function cms_create_theme_dashboard()
         {
-            include_once abtheme()->path('APP_DIR', 'templates/dashboard/dashboard.php');
+            include_once cmssuperheroes()->path('APP_DIR', 'templates/dashboard/dashboard.php');
         }
 
-        function abtheme_add_admin_bar_menu($wp_admin_bar)
+        function cms_add_admin_bar_menu($wp_admin_bar)
         {
             $theme = wp_get_theme();
             /**
@@ -66,12 +66,12 @@ if (!class_exists('EFramework_menu_handle')) {
              */
             $args = array(
                 'id'     => 'dashboard',
-                'title'  => esc_html__('Dashboard', 'abtheme'),
+                'title'  => esc_html__('Dashboard', CMS_TEXT_DOMAIN),
                 'href'   => admin_url('admin.php?page=' . $theme->get("TextDomain")),
                 'parent' => $theme->get("TextDomain"),
                 'meta'   => array(
                     'class' => '',
-                    'title' => esc_html__('Dashboard', 'abtheme'),
+                    'title' => esc_html__('Dashboard', CMS_TEXT_DOMAIN),
                 )
             );
             $wp_admin_bar->add_node($args);
@@ -82,12 +82,12 @@ if (!class_exists('EFramework_menu_handle')) {
             if (is_plugin_active('theme-core-import-export/theme-core-import-export.php')) {
                 $args = array(
                     'id'     => 'theme-core-import',
-                    'title'  => esc_html__('Import Demos', 'abtheme'),
+                    'title'  => esc_html__('Import Demos', CMS_TEXT_DOMAIN),
                     'href'   => admin_url('admin.php?page=theme-core-import'),
                     'parent' => $theme->get("TextDomain"),
                     'meta'   => array(
                         'class' => '',
-                        'title' => esc_html__('Import Demos', 'abtheme'),
+                        'title' => esc_html__('Import Demos', CMS_TEXT_DOMAIN),
                     )
                 );
                 $wp_admin_bar->add_node($args);
@@ -98,12 +98,12 @@ if (!class_exists('EFramework_menu_handle')) {
              */
             $args = array(
                 'id'     => 'theme-options',
-                'title'  => esc_html__('Theme Options', 'abtheme'),
+                'title'  => esc_html__('Theme Options', CMS_TEXT_DOMAIN),
                 'href'   => admin_url('admin.php?page=theme-options'),
                 'parent' => $theme->get("TextDomain"),
                 'meta'   => array(
                     'class' => '',
-                    'title' => esc_html__('Import Demos', 'abtheme'),
+                    'title' => esc_html__('Import Demos', CMS_TEXT_DOMAIN),
                 )
             );
             $wp_admin_bar->add_node($args);

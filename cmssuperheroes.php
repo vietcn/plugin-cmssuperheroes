@@ -21,14 +21,12 @@ define('CMS_INCLUDES', CMS_DIR . "includes" . DIRECTORY_SEPARATOR);
 define('CMS_CSS', CMS_URL . "assets/css/");
 define('CMS_JS', CMS_URL . "assets/js/");
 define('CMS_IMAGES', CMS_URL . "assets/images/");
+define('CMS_TEXT_DOMAIN', 'cmssuperheroes');
 /**
  * Require functions on plugin
  */
 require_once CMS_INCLUDES . "functions.php";
-/**
- * Use CmssuperheroesCore class
- */
-new CmssuperheroesCore();
+//new CmssuperheroesCore();
 
 /**
  * Cmssuperheroes Class
@@ -36,15 +34,60 @@ new CmssuperheroesCore();
  */
 class CmssuperheroesCore
 {
+    /**
+     * Core singleton class
+     *
+     * @var self - pattern realization
+     * @access private
+     */
+    private static $_instance;
+
+    /**
+     * Store plugin paths
+     *
+     * @since 1.0
+     * @access private
+     * @var array
+     */
+    private $paths = array();
+
+    protected $post_metabox = null;
+
+    protected $post_format_metabox = null;
+
+    protected $taxonomy_metabox = null;
+
     public function __construct()
     {
+        $dir = untrailingslashit( plugin_dir_path( __FILE__ ) );
+        $url = untrailingslashit( plugin_dir_url( __FILE__ ) );
+
+        $this->set_paths(array(
+            'APP_DIR' => $dir,
+            'APP_URL' => $url
+        ));
+
         /**
          * Init function, which is run on site init and plugin loaded
          */
         add_action('init', array($this, 'cmsInit'));
         add_action('plugins_loaded', array($this, 'cmsActionInit'));
         add_filter('style_loader_tag', array($this, 'cmsValidateStylesheet'));
-
+        register_activation_hook(__FILE__, array($this, 'activation_hook'));
+        
+        if ( ! class_exists( 'ReduxFramework' ) )
+        {
+            add_action( 'admin_notices', array( $this, 'redux_framework_notice' ) );
+        }
+        else
+        {
+            // Late at 30 to be sure that other extensions available via same hook.
+            // Eg: Load extensions at 29 or lower.
+            add_action( "redux/extensions/before", array( $this, 'redux_extensions' ), 30 );
+        }
+        if (!class_exists('EFramework_enqueue_scripts')) {
+            require_once $this->path('APP_DIR', 'includes/class-enqueue-scripts.php');
+        }
 
         if (!class_exists('EFramework_CPT_Register')) {
             require_once CMS_INCLUDES . 'class-cpt-register.php';
@@ -191,6 +234,191 @@ class CmssuperheroesCore
         wp_enqueue_style('admin-style', CMS_CSS . 'admin.css', array(), '1.0.0');
         wp_enqueue_style('font-awesome', CMS_CSS . 'font-awesome.min.css', array(), 'all');
     }
+
+    /**
+     * Setter for paths
+     *
+     * @since  1.0
+     * @access protected
+     *
+     * @param array $paths
+     */
+    protected function set_paths( $paths = array() )
+    {
+        $this->paths = $paths;
+    }
+
+    /**
+     * Gets absolute path for file/directory in filesystem.
+     *
+     * @since  1.0
+     * @access public
+     *
+     * @param string $name - name of path path
+     * @param string $file - file name or directory inside path
+     *
+     * @return string
+     */
+    function path( $name, $file = '' )
+    {
+        return $this->paths[ $name ] . ( strlen( $file ) > 0 ? '/' . preg_replace( '/^\//', '', $file ) : '' );
+    }
+
+    /**
+     * Get url for asset files
+     *
+     * @since  1.0
+     * @access public
+     *
+     * @param  string $file - filename
+     * @return string
+     */
+    function get_url( $file = '' )
+    {
+        return esc_url( $this->path( 'APP_URL', $file ) );
+    }
+
+    /**
+     * Get template file full path
+     * @param  string $file
+     * @param  string $default
+     * @return string
+     */
+    function get_template( $file, $default ) {
+        $path = locate_template( $file );
+        if ( $path ) {
+            return $path;
+        }
+        return $default;
+    }
+
+
+    /**
+     * Redux Framework notices
+     *
+     * @since 1.0
+     * @access public
+     */
+    function redux_framework_notice()
+    {
+        $plugin_name = '<strong>' . esc_html__("Cmssupperheroes", CMS_TEXT_DOMAIN) . '</strong>';
+        $redux_name = '<strong>' . esc_html__("Redux Framework", CMS_TEXT_DOMAIN) . '</strong>';
+
+        echo '<div class="notice notice-warning is-dismissible">';
+        echo '<p>';
+        printf(
+            esc_html__('%1$s require %2$s installed and activated. Please active %3$s plugin', CMS_TEXT_DOMAIN),
+            $plugin_name,
+            $redux_name,
+            $redux_name
+        );
+        echo '</p>';
+        printf('<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Dismiss this notice.', CMS_TEXT_DOMAIN));
+        echo '</div>';
+    }
+
+
+    /**
+     * Action handle when active plugin
+     *
+     * Check Redux framework active
+     */
+    function activation_hook()
+    {
+        if (is_admin()) {
+            if (!is_plugin_active('redux-framework/redux-framework.php')) {
+                deactivate_plugins(plugin_basename(__FILE__));
+
+                $plugin_name = '<strong>' . esc_html__("Cmssupperheroes", CMS_TEXT_DOMAIN) . '</strong>';
+                $redux_name = '<strong>' . esc_html__("Redux Framework", CMS_TEXT_DOMAIN) . '</strong>';
+                ob_start();
+
+                printf(
+                    esc_html__('%1$s requires %2$s installed and activated. Currently it is either not installed or installed but not activated. Please follow these steps to get %1$s up and working:', CMS_TEXT_DOMAIN),
+                    $plugin_name,
+                    $redux_name
+                );
+
+                printf(
+                    "<br/><br/>1. " . esc_html__('Go to %1$s to check if %2$s is installed. If it is, activate it then activate %3$s.', CMS_TEXT_DOMAIN),
+                    sprintf('<strong><a href="%1$s">%2$s</a></strong>', esc_url(admin_url('plugins.php')), esc_html__('Plugins/Installed Plugins', CMS_TEXT_DOMAIN)),
+                    $redux_name,
+                    $plugin_name
+                );
+
+                printf(
+                    "<br/><br/>2. " . esc_html__('If %1$s is not installed, go to %2$s, search for %1$s, install and activate %1$s, then activate %3$s.', CMS_TEXT_DOMAIN),
+                    $redux_name,
+                    sprintf('<strong><a href="%1$s">%2$s</a></strong>', esc_url(admin_url('plugin-install.php?s=Redux+Framework&tab=search&type=term')), esc_html__('Plugins/Add New')),
+                    $plugin_name
+                );
+
+                $message = ob_get_clean();
+
+                wp_die($message, esc_html__('Plugin Activation Error', CMS_TEXT_DOMAIN), array('back_link' => true));
+            }
+        }
+    }
+
+
+    /**
+     * Load our ReduxFramework extensions
+     *
+     * @since 1.0
+     * @param  ReduxFramework $redux
+     */
+    function redux_extensions( $redux )
+    {
+        if ( ! class_exists( 'EFramework_Post_Metabox' ) )
+        {
+            require_once $this->path( 'APP_DIR', 'includes/class-post-metabox.php' );
+
+            if ( empty( $this->post_metabox ) )
+            {
+                $this->post_metabox = new EFramework_Post_Metabox( $redux );
+            }
+        }
+
+        if ( ! class_exists( 'EFramework_Taxonomy_Metabox' ) )
+        {
+            require_once $this->path( 'APP_DIR', 'includes/class-taxonomy-metabox.php' );
+
+            if ( empty( $this->taxonomy_metabox ) )
+            {
+                $this->taxonomy_metabox = new EFramework_Taxonomy_Metabox( $redux );
+            }
+        }
+    }
+
+    /**
+     * Get instance of the class
+     *
+     * @access public
+     * @return object this
+     */
+    public static function get_instance()
+    {
+        if ( ! ( self::$_instance instanceof self ) )
+        {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
 }
+
+
+/**
+ * Get instance of CmssuperheroesCore
+ *
+ * @since  1.0
+ * @return CmssuperheroesCore instance
+ */
+function cmssuperheroes()
+{
+    return CmssuperheroesCore::get_instance();
+}
+
+$GLOBALS['cmssuperheroes'] = cmssuperheroes();
 
 ?>
