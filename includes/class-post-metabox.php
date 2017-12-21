@@ -230,7 +230,7 @@ class EFramework_Post_Metabox
     protected function optimize_default_args()
     {
 //        $this->default_args['opt_name'] = isset($this->default_args['opt_name']) ? $this->default_args['opt_name'] . '_post_metabox' : 'abtheme_post_metabox';
-        $this->default_args['display_name'] = esc_html__('Settings', 'abtheme');
+        $this->default_args['display_name'] = esc_html__('Settings', CMS_TEXT_DOMAIN);
         $this->default_args['open_expanded'] = true;
         $this->default_args['footer_credit'] = '';
         $this->default_args['admin_bar'] = false;
@@ -270,7 +270,7 @@ class EFramework_Post_Metabox
             }
 
             if (in_array($field['id'], $this->field_ids[$post_type])) {
-                trigger_error(esc_html__('The field with id','abtheme').' '.esc_html($field['id']).' ' .esc_html__('for post type','abtheme').' '.esc_html($post_type).' '.esc_html__('is already registered.', 'abtheme'));
+                trigger_error(esc_html__('The field with id',CMS_TEXT_DOMAIN).' '.esc_html($field['id']).' ' .esc_html__('for post type',CMS_TEXT_DOMAIN).' '.esc_html($post_type).' '.esc_html__('is already registered.', CMS_TEXT_DOMAIN));
                 unset($section['fields'][$fkey]);
                 continue;
             }
@@ -284,7 +284,7 @@ class EFramework_Post_Metabox
 
         if (!empty($section['id'])) {
             if ($this->section_exist($section['id'], $post_type)) {
-                trigger_error(esc_html__('Section','abtheme').' '.esc_html($field['id']).' ' .esc_html__('for post type','abtheme').' '.esc_html($post_type).' '.esc_html__('is already registered.', 'abtheme'));
+                trigger_error(esc_html__('Section',CMS_TEXT_DOMAIN).' '.esc_html($field['id']).' ' .esc_html__('for post type',CMS_TEXT_DOMAIN).' '.esc_html($post_type).' '.esc_html__('is already registered.', CMS_TEXT_DOMAIN));
                 return;
             } else {
                 $this->panels[$post_type]['sections'][$section['id']] = $section;
@@ -813,8 +813,8 @@ class EFramework_Post_Metabox
             printf(
                 '<strong>%1$s %2$s</strong> %3$s',
                 esc_html(count($this->notices['errors'])),
-                esc_html__('error(s)', 'abtheme'),
-                esc_html__('were found! Some data might not be saved.', 'abtheme')
+                esc_html__('error(s)', CMS_TEXT_DOMAIN),
+                esc_html__('were found! Some data might not be saved.', CMS_TEXT_DOMAIN)
             );
             echo '</p></div>';
         }
@@ -825,12 +825,12 @@ class EFramework_Post_Metabox
             printf(
                 '<strong>%1$s %2$s</strong> %3$s',
                 esc_html(count($this->notices['warnings'])),
-                esc_html__('warning(s)', 'abtheme'),
-                esc_html__('were found! Some data might not be saved.', 'abtheme')
+                esc_html__('warning(s)', CMS_TEXT_DOMAIN),
+                esc_html__('were found! Some data might not be saved.', CMS_TEXT_DOMAIN)
             );
 
             echo '</p>';
-            printf('<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Dismiss this notice.', 'abtheme'));
+            printf('<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Dismiss this notice.', CMS_TEXT_DOMAIN));
             echo '</div>';
         }
     }

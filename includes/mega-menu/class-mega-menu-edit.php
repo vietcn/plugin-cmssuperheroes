@@ -50,9 +50,9 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
         <?php if( 0 === $depth ) : ?>
             <p class="description description-wide">
                 <label for="edit-menu-item-cms-megaprofile-<?php echo esc_attr( $item_id ); ?>">
-                    <?php esc_html_e( 'Select Mega Menu', 'cmssuperheroes' ); ?><br />
+                    <?php esc_html_e( 'Select Mega Menu', CMS_TEXT_DOMAIN ); ?><br />
                     <select id="edit-menu-item-cms-megaprofile-<?php echo esc_attr( $item_id ); ?>" class="widefat" name="menu-item-cms-megaprofile[<?php echo esc_attr( $item_id ); ?>]">
-                        <option value="0"><?php esc_html_e( 'None', 'cmssuperheroes' ) ?></option>
+                        <option value="0"><?php esc_html_e( 'None', CMS_TEXT_DOMAIN ) ?></option>
                         <?php
                         $r = $this->walker_args;
                         $r['selected'] = $item->cms_megaprofile;
@@ -65,9 +65,9 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
 
         <p class="description description-wide">
             <label for="edit-menu-item-cms-icon-<?php echo esc_attr( $item_id ); ?>">
-                <?php esc_html_e( 'Icon', 'cmssuperheroes' ); ?><br />
+                <?php esc_html_e( 'Icon', CMS_TEXT_DOMAIN ); ?><br />
                 <select id="edit-menu-item-cms-icon-<?php echo esc_attr( $item_id ); ?>" class="widefat cms-icon-picker" name="menu-item-cms-icon[<?php echo esc_attr( $item_id ); ?>]">
-                    <option value="" <?php selected( '', esc_attr( $item->cms_icon ) ) ?>><?php esc_html_e( 'No Icons', 'cmssuperheroes' ) ?></option>
+                    <option value="" <?php selected( '', esc_attr( $item->cms_icon ) ) ?>><?php esc_html_e( 'No Icons', CMS_TEXT_DOMAIN ) ?></option>
                     <?php $arr = $this->cms_iconpicker_fontawesome();
                     foreach ( $arr as $group => $icons ) { 	?>
                         <optgroup label="<?php echo esc_attr( $group ); ?>">
@@ -83,10 +83,10 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit {
 
         <p class="description description-wide">
             <label for="menu-item-cms-onepage<?php echo esc_attr( $item_id ); ?>">
-                <?php esc_html_e( 'One page', 'cmssuperheroes' ); ?><br />
+                <?php esc_html_e( 'One page', CMS_TEXT_DOMAIN ); ?><br />
                 <select id="menu-item-cms-onepage-<?php echo esc_attr( $item_id ); ?>" class="widefat menu-item-cms-onepage" name="menu-item-cms-onepage[<?php echo esc_attr( $item_id ); ?>]">
-                    <option value="yes" <?php selected( esc_attr( $item->cms_onepage ), 'yes' ) ?>><?php esc_html_e( 'Yes', 'cmssuperheroes' ) ?></option>
-                    <option value="no" <?php selected( esc_attr( $item->cms_onepage ),  'no') ?>><?php esc_html_e( 'No', 'cmssuperheroes' ) ?></option>
+                    <option value="yes" <?php selected( esc_attr( $item->cms_onepage ), 'yes' ) ?>><?php esc_html_e( 'Yes', CMS_TEXT_DOMAIN ) ?></option>
+                    <option value="no" <?php selected( esc_attr( $item->cms_onepage ),  'no') ?>><?php esc_html_e( 'No', CMS_TEXT_DOMAIN ) ?></option>
                 </select>
             </label>
         </p>

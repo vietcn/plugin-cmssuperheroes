@@ -79,7 +79,7 @@ if (!class_exists('EFramework_menu_handle')) {
             /**
              * Add Import Export children node
              */
-            if (is_plugin_active('theme-core-import-export/theme-core-import-export.php')) {
+            if (class_exists('SWA_Import_Export')) {
                 $args = array(
                     'id'     => 'theme-core-import',
                     'title'  => esc_html__('Import Demos', CMS_TEXT_DOMAIN),

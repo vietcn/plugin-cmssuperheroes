@@ -14,7 +14,7 @@
             </div>
         </header>
         <div class="abcore-import-demos">
-            <h2><?php echo esc_html__('Import Demos', 'abtheme') ?></h2>
+            <h2><?php echo esc_html__('Import Demos', CMS_TEXT_DOMAIN) ?></h2>
         </div>
         <?php
         if (!empty($export_mode)) {

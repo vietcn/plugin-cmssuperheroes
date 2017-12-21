@@ -36,13 +36,13 @@ $classes = implode( ' ', array_filter( $classes ) );
 
 <div class="<?php echo trim( esc_attr( $classes ) ); ?>">
     <div class="redux-save-warn notice-yellow">
-        <strong><?php echo apply_filters( "redux-changed-text-{$this->parent->args['opt_name']}", esc_html__( 'Settings have changed, you should save them!', 'abtheme' ) ) ?></strong>
+        <strong><?php echo apply_filters( "redux-changed-text-{$this->parent->args['opt_name']}", esc_html__( 'Settings have changed, you should save them!', CMS_TEXT_DOMAIN ) ) ?></strong>
     </div>
     <div class="redux-field-errors notice-red">
-        <strong><span></span> <?php echo esc_html__( 'error(s) were found!', 'abtheme' ) ?></strong>
+        <strong><span></span> <?php echo esc_html__( 'error(s) were found!', CMS_TEXT_DOMAIN ) ?></strong>
     </div>
     <div class="redux-field-warnings notice-yellow">
-        <strong><span></span> <?php echo esc_html__( 'warning(s) were found!', 'abtheme' ) ?>
+        <strong><span></span> <?php echo esc_html__( 'warning(s) were found!', CMS_TEXT_DOMAIN ) ?>
         </strong></div>
     <?php
         do_action( "redux/page/{$this->parent->args['opt_name']}/content/before", $this );

@@ -54,17 +54,17 @@
             <span class="spinner"></span>
 <?php 
             if ( false === $this->parent->args['hide_save'] ) {
-                submit_button( esc_html__( 'Save Changes', 'abtheme' ), 'primary', 'redux_save', false );
+                submit_button( esc_html__( 'Save Changes', CMS_TEXT_DOMAIN ), 'primary', 'redux_save', false );
             }
 
             if ( false === $this->parent->args['hide_reset'] ) {
-                submit_button( esc_html__( 'Reset Section', 'abtheme' ), 'secondary', $this->parent->args['opt_name'] . '[defaults-section]', false, array( 'id' => 'redux-defaults-section' ) );
-                submit_button( esc_html__( 'Reset All', 'abtheme' ), 'secondary', $this->parent->args['opt_name'] . '[defaults]', false, array( 'id' => 'redux-defaults' ) );
+                submit_button( esc_html__( 'Reset Section', CMS_TEXT_DOMAIN ), 'secondary', $this->parent->args['opt_name'] . '[defaults-section]', false, array( 'id' => 'redux-defaults-section' ) );
+                submit_button( esc_html__( 'Reset All', CMS_TEXT_DOMAIN ), 'secondary', $this->parent->args['opt_name'] . '[defaults]', false, array( 'id' => 'redux-defaults' ) );
             } 
 ?>
         </div>
 
-        <div class="redux-ajax-loading" alt="<?php esc_html_e( 'Working...', 'abtheme' ) ?>">&nbsp;</div>
+        <div class="redux-ajax-loading" alt="<?php esc_html_e( 'Working...', CMS_TEXT_DOMAIN ) ?>">&nbsp;</div>
         <div class="clear"></div>
 
     </div>

@@ -55,7 +55,7 @@ class EFramework_Widget_Extends
                 name="widget-<?php echo esc_attr( $widget->id_base . '[' . $widget->number . '][use_theme_style]' ); ?>" 
                 id="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-use_theme_style" 
                 <?php checked( $instance['use_theme_style'] ); ?> />
-            <label for="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-use_theme_style"><?php esc_html_e( 'Use Theme Style', 'abtheme' ); ?></label>
+            <label for="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-use_theme_style"><?php esc_html_e( 'Use Theme Style', CMS_TEXT_DOMAIN ); ?></label>
         </p>
         <?php
         }
@@ -63,7 +63,7 @@ class EFramework_Widget_Extends
         $hide_title = isset( $instance['hide_title'] ) ? (bool) $instance['hide_title'] : false;
         ?>
         <p>
-            <label for="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-el_class"><?php esc_html_e( 'CSS Class', 'abtheme' ); ?></label>
+            <label for="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-el_class"><?php esc_html_e( 'CSS Class', CMS_TEXT_DOMAIN ); ?></label>
             <input type="text" class="widefat code" 
                 name="widget-<?php echo esc_attr( $widget->id_base . '[' . $widget->number . '][el_class]' ); ?>" 
                 id="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-el_class" 
@@ -74,7 +74,7 @@ class EFramework_Widget_Extends
                 name="widget-<?php echo esc_attr( $widget->id_base . '[' . $widget->number . '][hide_title]' ); ?>" 
                 id="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-hide_title" 
                 <?php checked( $hide_title ); ?> />
-            <label for="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-hide_title"><?php esc_html_e( 'Hide widget title', 'abtheme' ); ?></label>
+            <label for="widget-<?php echo esc_attr( $widget->id_base . '-' . $widget->number ); ?>-hide_title"><?php esc_html_e( 'Hide widget title', CMS_TEXT_DOMAIN ); ?></label>
         </p>
         <?php
 

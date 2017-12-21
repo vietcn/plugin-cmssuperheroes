@@ -113,9 +113,9 @@ vc_map(
                 'type' => 'cms_template_img',
                 'param_name' => 'cms_template',
                 "shortcode" => "cms_carousel",
-                "heading" => esc_html__("Shortcode Template",'abtheme'),
+                "heading" => esc_html__("Shortcode Template",CMS_TEXT_DOMAIN),
                 "admin_label" => true,
-                "group" => esc_html__("Template", 'abtheme'),
+                "group" => esc_html__("Template", CMS_TEXT_DOMAIN),
             ),
 	    )
 	)
