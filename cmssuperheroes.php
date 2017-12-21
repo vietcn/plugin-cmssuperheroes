@@ -140,7 +140,7 @@ class CmssuperheroesCore
 
     function cmsInit()
     {
-        if (apply_filters('abtheme_scssc_on', false)) {
+        if (apply_filters('cms_scssc_on', false)) {
             // scss compiler library
             if (!class_exists('scssc')) {
                 require_once CMS_LIBRARIES . 'scss.inc.php';
