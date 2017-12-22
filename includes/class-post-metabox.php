@@ -93,7 +93,7 @@ class EFramework_Post_Metabox
         $this->default_args = $redux->args;
         $this->optimize_default_args();
 
-        do_action('abtheme_post_metabox_register', $this);
+        do_action('cms_post_metabox_register', $this);
 
         if (empty($this->post_types) || empty($this->panels)) {
             return;
@@ -105,7 +105,7 @@ class EFramework_Post_Metabox
             add_action('save_post', array($this, 'save_meta_boxes'), 5, 2);
             add_action('admin_notices', array($this, 'admin_notices'));
             add_action('wp_head', array($this, 'enqueue_output'), 160);
-            add_action('hidden_meta_boxes', array($this, 'abtheme_set_user_metaboxes'));
+            add_action('hidden_meta_boxes', array($this, 'cms_set_user_metaboxes'));
         }
     }
 
@@ -382,7 +382,7 @@ class EFramework_Post_Metabox
                 continue;
             }
             $new_post_type = $post_type;
-            if (in_array(str_replace('abtheme_pf_', '', $new_post_type), $post_formats) !== false) {
+            if (in_array(str_replace('cms_pf_', '', $new_post_type), $post_formats) !== false) {
                 $new_post_type = 'post';
             }
             add_meta_box(
@@ -402,7 +402,7 @@ class EFramework_Post_Metabox
         }
     }
 
-    function abtheme_set_user_metaboxes($hidden)
+    function cms_set_user_metaboxes($hidden)
     {
         foreach ($this->list_screen as $post_fm) {
             if (($key = array_search($post_fm, $hidden)) !== false) {
@@ -734,13 +734,13 @@ class EFramework_Post_Metabox
          */
         $post_format = !empty($_REQUEST['post_format']) ? $_REQUEST['post_format'] : '';
         if(!empty($post_format)){
-            $abtheme_pf_panel = 'abtheme_pf_'.$post_format;
+            $cms_pf_panel = 'cms_pf_'.$post_format;
             $post_format_type = !empty($_POST['post_format_' . $post_format]) ? $_POST['post_format_' . $post_format] : '';
-            if (in_array($abtheme_pf_panel, $this->post_types) && !empty($_POST[$this->panels[$abtheme_pf_panel]['args']['opt_name']]) && !empty($post_format_type)) {
-                $sections_post_format = $this->get_opt_sections($abtheme_pf_panel);
-                $args_post_format = $this->get_opt_args($abtheme_pf_panel);
+            if (in_array($cms_pf_panel, $this->post_types) && !empty($_POST[$this->panels[$cms_pf_panel]['args']['opt_name']]) && !empty($post_format_type)) {
+                $sections_post_format = $this->get_opt_sections($cms_pf_panel);
+                $args_post_format = $this->get_opt_args($cms_pf_panel);
                 $data_to_save_pfm = array();
-                $data_to_compare_pfm = $this->get_opt_defaults($abtheme_pf_panel);
+                $data_to_compare_pfm = $this->get_opt_defaults($cms_pf_panel);
                 foreach ($_POST[$args_post_format['opt_name']] as $key => $data) {
                     if (is_array($data)) {
                         foreach ($data as $dindex => $value) {
