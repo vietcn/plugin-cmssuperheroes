@@ -51,11 +51,11 @@ class CmssuperheroesCore
      */
     private $paths = array();
 
-    protected $post_metabox = null;
+    public $post_metabox = null;
 
     protected $post_format_metabox = null;
 
-    protected $taxonomy_metabox = null;
+    protected $taxonomy_meta = null;
 
     public function __construct()
     {
@@ -377,19 +377,22 @@ class CmssuperheroesCore
      */
     function redux_extensions($redux)
     {
-        if (!class_exists('EFramework_Post_Metabox')) {
+        if (!class_exists('CMS_Redux_Extensions')) {
+            require_once $this->path('APP_DIR', 'includes/class-redux-extensions.php');
+        }
+        if (!class_exists('CMS_Post_Metabox')) {
             require_once $this->path('APP_DIR', 'includes/class-post-metabox.php');
 
             if (empty($this->post_metabox)) {
-                $this->post_metabox = new EFramework_Post_Metabox($redux);
+                $this->post_metabox = new CMS_Post_Metabox($redux);
             }
         }
 
-        if (!class_exists('EFramework_Taxonomy_Metabox')) {
-            require_once $this->path('APP_DIR', 'includes/class-taxonomy-metabox.php');
+        if (!class_exists('CMS_Taxonomy_Meta')) {
+            require_once $this->path('APP_DIR', 'includes/class-taxonomy-meta.php');
 
-            if (empty($this->taxonomy_metabox)) {
-                $this->taxonomy_metabox = new EFramework_Taxonomy_Metabox($redux);
+            if (empty($this->taxonomy_meta)) {
+                $this->taxonomy_meta = new CMS_Taxonomy_Meta($redux);
             }
         }
     }

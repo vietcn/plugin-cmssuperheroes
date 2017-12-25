@@ -10,11 +10,11 @@
  * @version 1.0
  */
 
-if (class_exists('EFramework_Post_Metabox')) {
+if (class_exists('CMS_Post_Metabox')) {
     return;
 }
 
-class EFramework_Post_Metabox
+class CMS_Post_Metabox
 {
     /**
      * Version
@@ -483,7 +483,7 @@ class EFramework_Post_Metabox
      */
     function panel_template()
     {
-        return cmssuperheroes()->path('APP_DIR') . '/templates/panel';
+        return cmssuperheroes()->path('APP_DIR') . '/templates/panel-post-meta';
     }
 
     /**
