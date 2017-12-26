@@ -676,14 +676,14 @@ class CMS_Taxonomy_Meta
     {
         global $pagenow;
 
-        if ('edit-tags.php' == $pagenow || 'term.php' == $pagenow) {
-            echo '<div class="notice notice-warning is-dismissible">';
-            echo '<p>';
-            esc_html_e('All invalid custom field values for newly created term or existing term will not be saved, if you are missing something, please check field descriptions for instructions how to input valid values.', CMS_TEXT_DOMAIN);
-            echo '</p>';
-            printf('<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Dismiss this notice.', CMS_TEXT_DOMAIN));
-            echo '</div>';
-        }
+//        if ('edit-tags.php' !== $pagenow && 'term.php' !== $pagenow) {
+//            echo '<div class="notice notice-warning is-dismissible">';
+//            echo '<p>';
+//            esc_html_e('All invalid custom field values for newly created term or existing term will not be saved, if you are missing something, please check field descriptions for instructions how to input valid values.', CMS_TEXT_DOMAIN);
+//            echo '</p>';
+//            printf('<button type="button" class="notice-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Dismiss this notice.', CMS_TEXT_DOMAIN));
+//            echo '</div>';
+//        }
 
         if (!empty($this->notices['errors'])) {
             echo '<div class="error"><p>';

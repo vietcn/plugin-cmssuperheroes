@@ -19,10 +19,7 @@ function cms_add_more_shortcode(){
 	'cms_counter',
 	'cms_progressbar',
 	);
-	$shortcodes = apply_filters('cms-shorc
-	
-	
-	ode-list', $shortcodes);
+	$shortcodes = apply_filters('cms-shorcode-list', $shortcodes);
 	foreach($shortcodes as $shortcode){
 		require_once CMS_DIR . '/shortcodes/'.$shortcode.'.php';
 	}
