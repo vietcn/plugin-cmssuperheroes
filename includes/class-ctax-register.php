@@ -10,7 +10,7 @@ class EFramework_CTax_Register
 {
     /**
      * Core singleton class
-     * 
+     *
      * @var self - pattern realization
      * @access private
      */
@@ -30,7 +30,7 @@ class EFramework_CTax_Register
      */
     function __construct()
     {
-        add_action( 'init', array( $this, 'init' ), 0 );
+        add_action('init', array($this, 'init'), 0);
     }
 
     /**
@@ -38,37 +38,40 @@ class EFramework_CTax_Register
      */
     function init()
     {
-        $this->taxonomies = apply_filters( 'abtheme_extra_taxonomies', array(
-            'cmsportfolio-category' => true,
-        ) );
-
-        if ( isset( $this->taxonomies['cmsportfolio-category'] ) && $this->taxonomies['cmsportfolio-category'] === true )
-        {
-            $this->portfolio_category_register();
-        }
-    }
-    function portfolio_category_register(){
-
-
-        $categories = array(
-            'hierarchical' => true,
-            'show_tagcloud' => true,
-            'labels' => array(
-                'name' => esc_html__('Categories', CMS_TEXT_DOMAIN),
-                'singular_name' => esc_html__('Category', CMS_TEXT_DOMAIN),
-                'edit_item' => esc_html__('Edit Category', CMS_TEXT_DOMAIN),
-                'update_item' => esc_html__('Update Category', CMS_TEXT_DOMAIN),
-                'add_new_item' => esc_html__('Add New Category', CMS_TEXT_DOMAIN),
-                'new_item_name' => esc_html__('New Type Category', CMS_TEXT_DOMAIN),
-                'all_items' => esc_html__('All Categories', CMS_TEXT_DOMAIN),
-                'search_items' => esc_html__('Search Category', CMS_TEXT_DOMAIN),
-                'parent_item' => esc_html__('Parent Category', CMS_TEXT_DOMAIN),
-                'parent_item_colon' => esc_html__('Parent Category' . ':', CMS_TEXT_DOMAIN),
+        $this->taxonomies = apply_filters('cms_extra_taxonomies', array(
+            'cmsportfolio-category' => array(
+                'status'     => true,
+                'post_type'  => array('portfolio'),
+                'taxonomy'   => esc_html__('Category', CMS_TEXT_DOMAIN),
+                'taxonomies' => esc_html__('Categories', CMS_TEXT_DOMAIN),
+                'args'       => array(),
+                'labels'     => array()
             ),
-            'show_in_menu' => true
-        );
-        
-        register_taxonomy('cmsportfolio-category', array('cms-portfolio'), $categories);
+        ));
+        foreach ($this->taxonomies as $key => $cms_taxonomy) {
+            if ($cms_taxonomy['status'] === true) {
+                $categories = array_merge(array(
+                    'hierarchical'  => true,
+                    'show_tagcloud' => true,
+                    'labels'        => array_merge(array(
+                        'name'              => $cms_taxonomy['taxonomies'],
+                        'singular_name'     => $cms_taxonomy['taxonomy'],
+                        'edit_item'         => esc_html__('Edit', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'],
+                        'update_item'       => esc_html__('Update', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'],
+                        'add_new_item'      => esc_html__('Add New', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'],
+                        'new_item_name'     => esc_html__('New Type', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'],
+                        'all_items'         => esc_html__('All', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomies'],
+                        'search_items'      => esc_html__('Search', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'],
+                        'parent_item'       => esc_html__('Parent', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'],
+                        'parent_item_colon' => esc_html__('Parent', CMS_TEXT_DOMAIN) . ' ' . $cms_taxonomy['taxonomy'] . ':',
+                    ), $cms_taxonomy['labels']),
+                    'show_in_menu'  => true
+                ), $cms_taxonomy['args']);
+
+                register_taxonomy($key, $cms_taxonomy['post_type'], $categories);
+            }
+        }
+
     }
 
     /**
@@ -79,8 +82,7 @@ class EFramework_CTax_Register
      */
     public static function get_instance()
     {
-        if ( ! ( self::$_instance instanceof self ) )
-        {
+        if (!(self::$_instance instanceof self)) {
             self::$_instance = new self();
         }
 
