@@ -10,7 +10,7 @@ if(!defined('ABSPATH')){
     die();
 }
 class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
-
+    private $item;
     /**
      * Starts the list before the elements are added.
      *
@@ -31,14 +31,21 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
      * @see Walker::start_el()
      */
     function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
-
         $item_html = '';
         if( '[divider]' === $item->title ) {
             $output .= '<li class="menu-item-divider"></li>';
             return;
         }
-
-
+        $this->item = $item->cms_onepage;
+        if($this->item ==='is-one-page' && !wp_script_is('single-page-nav')){
+            wp_register_script('single-page-nav', CMS_JS . 'jquery.singlePageNav.js', array('jquery'), 'all',true);
+            wp_localize_script('single-page-nav', 'one_page_options', array('filter' => '.is-one-page', 'speed' => '1000'));
+            wp_enqueue_script('single-page-nav');
+        }
+        add_filter('nav_menu_link_attributes',function ($atts){
+            $atts['class'] = $this->item;
+            return $atts;
+        },10,1);
         if( !empty( $item->cms_megaprofile ) ) {
             $item->classes[] = 'megamenu megamenu-style-alt';
         }
@@ -57,10 +64,6 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
             }
         }
 
-        if( isset( $args->nav_style ) && 'onepage' === $args->nav_style ) {
-            $item->classes[] = 'local-scroll';
-        }
-
         parent::start_el( $item_html, $item, $depth, $args, $id );
 
         if( isset( $args->old_link_before ) ) {
@@ -76,9 +79,6 @@ class EFramework_Mega_Menu_Walker extends Walker_Nav_Menu {
 
         if( !empty( $item->cms_megaprofile ) ) {
             $item_html .= $this->get_megamenu( $item->cms_megaprofile );
-        }
-        if( !empty( $item->cms_onepage ) && 'yes' === $item->cms_onepage) {
-            $item->classes[] = 'local-scroll';
         }
 
         $output .= $item_html;

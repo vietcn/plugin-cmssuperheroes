@@ -18,6 +18,7 @@ define('CMS_LANGUAGES', CMS_DIR . "languages" . DIRECTORY_SEPARATOR);
 define('CMS_TEMPLATES', CMS_DIR . "templates" . DIRECTORY_SEPARATOR);
 define('CMS_INCLUDES', CMS_DIR . "includes" . DIRECTORY_SEPARATOR);
 
+define('CMS_ASSETS', CMS_URL . "assets/");
 define('CMS_CSS', CMS_URL . "assets/css/");
 define('CMS_JS', CMS_URL . "assets/js/");
 define('CMS_IMAGES', CMS_URL . "assets/images/");

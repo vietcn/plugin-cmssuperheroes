@@ -35,10 +35,8 @@ if ( ! class_exists( 'ReduxFramework_cms_datetime' ) ) {
 		 * @since ReduxFramework 1.0.0
 		 */
 		function render() {
-			//if (isset($this->field['text_hint']) && is_array($this->field['text_hint'])) {
 			$qtip_title = isset( $this->field['text_hint']['title'] ) ? 'qtip-title="' . $this->field['text_hint']['title'] . '" ' : '';
 			$qtip_text  = isset( $this->field['text_hint']['content'] ) ? 'qtip-content="' . $this->field['text_hint']['content'] . '" ' : '';
-			//}
 
 			$readonly     = ( isset( $this->field['readonly'] ) && $this->field['readonly'] ) ? ' readonly="readonly"' : '';
 			$autocomplete = ( isset( $this->field['autocomplete'] ) && $this->field['autocomplete'] == false ) ? ' autocomplete="off"' : '';
@@ -47,19 +45,19 @@ if ( ! class_exists( 'ReduxFramework_cms_datetime' ) ) {
 			$step         = ( isset( $this->field['step'] ) ) ? ' step="' . $this->field['step'] . '"' : '';
 
 			$placeholder = ( isset( $this->field['placeholder'] ) && ! is_array( $this->field['placeholder'] ) ) ? ' placeholder="' . esc_attr( $this->field['placeholder'] ) . '" ' : '';
-			echo '<input class="datetime" ' . $min . $max . $step . $qtip_title . $qtip_text . 'type="text" id="' . $this->field['id'] . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" ' . $placeholder . 'value="' . esc_attr( $this->value ) . '" class="regular-text regular-number ' . $this->field['class'] . '"' . $readonly . $autocomplete . ' />';
+			echo '<input class="cms-datetime" ' . $min . $max . $step . $qtip_title . $qtip_text . 'type="text" id="' . $this->field['id'] . '" name="' . $this->field['name'] . $this->field['name_suffix'] . '" ' . $placeholder . 'value="' . esc_attr( $this->value ) . '" class="regular-text regular-number ' . $this->field['class'] . '"' . $readonly . $autocomplete . ' />';
 		}
 
 		public function enqueue() {
 			wp_register_script( 'jquery-ui-timepicker-addon', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js', array( 'jquery' ) );
 			wp_register_style( 'jquery-ui-timepicker-addon', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css', array() );
-			wp_register_style( 'jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' );
-			wp_register_script( 'jquery-ui', 'http://code.jquery.com/ui/1.10.3/jquery-ui.js', array( 'jquery' ) );
+			wp_register_style( 'jquery-ui-cms-datetime-css', CMS_ASSETS.'extensions/css/jquery-ui.min.css' );
+			wp_register_script( 'jquery-ui-cms-datetime', CMS_ASSETS.'extensions/js/jquery-ui.min.js', array( 'jquery' ) );
 
-			wp_enqueue_script( 'jquery-ui' );
+			wp_enqueue_script( 'jquery-ui-cms-datetime' );
 			wp_enqueue_script( 'jquery-ui-timepicker-addon' );
 			wp_enqueue_style( 'jquery-ui-timepicker-addon' );
-			wp_enqueue_style( 'jquery-ui' );
+			wp_enqueue_style( 'jquery-ui-cms-datetime-css' );
 
 			if ( ! wp_script_is( 'cms-datetime-js' ) ) {
 				wp_enqueue_script(

@@ -368,39 +368,16 @@ class CMS_Taxonomy_Meta
      * @access public
      * @param string $taxonomy
      */
-    function add_form_fields( $taxonomy )
+    function add_form_fields($taxonomy)
     {
-        if ( empty( $this->panels[ $taxonomy ]['args'] || empty( $this->panels[ $taxonomy ]['sections'] ) ) )
-        {
+        if (empty($this->panels[$taxonomy]['args']) || empty($this->panels[$taxonomy]['sections'])) {
             return;
         }
-        $display_name = $this->panels[ $taxonomy ]['args']['display_name'];
+        $display_name = $this->panels[$taxonomy]['args']['display_name'];
 
         echo '<div class="form-field term-rc-custom-wrap">';
         $this->generate_panel($this->panels[$taxonomy]['sections'], $this->panels[$taxonomy]['args']);
         echo '</div>';
-//
-//        echo '<div class="form-field ef-postbox ef-taxonomy-postbox">';
-//        printf( '<h2>%s</h2>', esc_html( $display_name ) );
-//        $this->generate_panel( $this->panels[ $taxonomy ]['sections'], $this->panels[ $taxonomy ]['args'] );
-//        echo '</div>';
-    }
-
-    function add_taxonomy_fields($taxonomy)
-    {
-        echo '<div class="form-field term-rc-custom-wrap">';
-        $this->generate_panel($this->panels[$taxonomy]['sections'], $this->panels[$taxonomy]['args']);
-        echo '</div>';
-    }
-
-    function edit_taxonomy_fields($tag, $taxonomy)
-    {
-        echo '<tr class="form-field term-rc-custom-wrap">';
-        echo '<th scope="row"><label>' . esc_html($this->taxonomies[$taxonomy]['args']['meta_title']) . '</label></th>';
-        echo '<td><div>';
-        $this->generate_panel($this->panels[$taxonomy]['sections'], $this->panels[$taxonomy]['args']);
-        echo '</div></td>';
-        echo '</tr>';
     }
 
     /**
@@ -413,7 +390,7 @@ class CMS_Taxonomy_Meta
      */
     function edit_form_fields($term, $taxonomy)
     {
-        if (empty($this->panels[$taxonomy]['args'] || empty($this->panels[$taxonomy]['sections']))) {
+        if (empty($this->panels[$taxonomy]['args']) || empty($this->panels[$taxonomy]['sections'])) {
             return;
         }
         $display_name = $this->panels[$taxonomy]['args']['display_name'];

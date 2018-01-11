@@ -1,5 +1,5 @@
 jQuery(function ($) {
-    $('.datetime').datetimepicker({
+    $('.cms-datetime').datetimepicker({
         timeFormat: "HH:mm",
         dateFormat : 'yy-mm-dd'
     });

@@ -6,10 +6,11 @@
  * @author  KP
  *
  */
-if(!defined('ABSPATH')){
+if (!defined('ABSPATH')) {
     die();
 }
-require_once( CMS_INCLUDES.'mega-menu/class-megamenu-walker.php');
+require_once(CMS_INCLUDES . 'mega-menu/class-megamenu-walker.php');
+
 class EFramework_MegaMenu_Register
 {
     /**
@@ -28,7 +29,7 @@ class EFramework_MegaMenu_Register
      */
     function __construct()
     {
-        add_action('admin_enqueue_scripts',array($this,'cms_enqueue_style'));
+        add_action('admin_enqueue_scripts', array($this, 'cms_enqueue_style'));
         add_action('init', array($this, 'init'), 0);
         // Custom Fields - Add
         add_filter('wp_setup_nav_menu_item', array($this, 'setup_nav_menu_item'));
@@ -38,6 +39,18 @@ class EFramework_MegaMenu_Register
 
         // Custom Walker - Edit
         add_filter('wp_edit_nav_menu_walker', array($this, 'edit_nav_menu_walker'), 100, 2);
+
+        add_action('init', array($this, 'register_mega_menu_type'));
+    }
+
+    function register_mega_menu_type()
+    {
+        $cms_locations = apply_filters('cms_locations', array(
+            'cms-menu' => __('CMS Menu')
+        ));
+        register_nav_menus(
+            $cms_locations
+        );
     }
 
     function init()
@@ -93,42 +106,47 @@ class EFramework_MegaMenu_Register
 
 
     // Custom Fields - Add
-    function setup_nav_menu_item( $menu_item ) {
+    function setup_nav_menu_item($menu_item)
+    {
 
-        $menu_item->cms_megaprofile = get_post_meta( $menu_item->ID, '_menu_item_cms_megaprofile', true );
-        $menu_item->cms_icon = get_post_meta( $menu_item->ID, '_menu_item_cms_icon', true );
-        $menu_item->cms_onepage = get_post_meta( $menu_item->ID, '_menu_item_cms_onepage', true );
+        $menu_item->cms_megaprofile = get_post_meta($menu_item->ID, '_menu_item_cms_megaprofile', true);
+        $menu_item->cms_icon = get_post_meta($menu_item->ID, '_menu_item_cms_icon', true);
+        $menu_item->cms_onepage = get_post_meta($menu_item->ID, '_menu_item_cms_onepage', true);
         return $menu_item;
     }
 
     // Custom Fields - Save
-    function update_nav_menu_item( $menu_id, $menu_item_db_id, $menu_item_data ) {
+    function update_nav_menu_item($menu_id, $menu_item_db_id, $menu_item_data)
+    {
 
-        if ( isset( $_REQUEST['menu-item-cms-megaprofile'][$menu_item_db_id]) ) {
+        if (isset($_REQUEST['menu-item-cms-megaprofile'][$menu_item_db_id])) {
             update_post_meta($menu_item_db_id, '_menu_item_cms_megaprofile', $_REQUEST['menu-item-cms-megaprofile'][$menu_item_db_id]);
         }
-        if ( isset( $_REQUEST['menu-item-cms-icon'][$menu_item_db_id]) ) {
+        if (isset($_REQUEST['menu-item-cms-icon'][$menu_item_db_id])) {
             update_post_meta($menu_item_db_id, '_menu_item_cms_icon', $_REQUEST['menu-item-cms-icon'][$menu_item_db_id]);
         }
 
-        if ( isset( $_REQUEST['menu-item-cms-onepage'][$menu_item_db_id]) ) {
+        if (isset($_REQUEST['menu-item-cms-onepage'][$menu_item_db_id])) {
             update_post_meta($menu_item_db_id, '_menu_item_cms_onepage', $_REQUEST['menu-item-cms-onepage'][$menu_item_db_id]);
         }
     }
 
     // Custom Backend Walker - Edit
-    function edit_nav_menu_walker( $walker, $menu_id ) {
-        if ( ! class_exists( 'EFramework_Mega_Menu_Edit_Walker' ) ) {
-            require_once( CMS_INCLUDES . 'mega-menu/class-mega-menu-edit.php' );
+    function edit_nav_menu_walker($walker, $menu_id)
+    {
+        if (!class_exists('EFramework_Mega_Menu_Edit_Walker')) {
+            require_once(CMS_INCLUDES . 'mega-menu/class-mega-menu-edit.php');
         }
 
         return 'EFramework_Mega_Menu_Edit_Walker';
     }
-    function cms_enqueue_style(){
-        wp_enqueue_style('jquery.fonticonpicker.min.css',CMS_CSS.'iconpicker/css/jquery.fonticonpicker.min.css',array(),'all');
-        wp_enqueue_style('jquery.fonticonpicker.grey.min.css',CMS_CSS.'iconpicker/themes/grey-theme/jquery.fonticonpicker.grey.min.css',array(),'all');
-        wp_enqueue_script('jquery.fonticonpicker.js',CMS_CSS.'iconpicker/jquery.fonticonpicker.js',array('jquery'));
-        wp_enqueue_script('',CMS_CSS.'iconpicker/cms-iconpicker.js');
+
+    function cms_enqueue_style()
+    {
+        wp_enqueue_style('jquery.fonticonpicker.min.css', CMS_CSS . 'iconpicker/css/jquery.fonticonpicker.min.css', array(), 'all');
+        wp_enqueue_style('jquery.fonticonpicker.grey.min.css', CMS_CSS . 'iconpicker/themes/grey-theme/jquery.fonticonpicker.grey.min.css', array(), 'all');
+        wp_enqueue_script('jquery.fonticonpicker.js', CMS_CSS . 'iconpicker/jquery.fonticonpicker.js', array('jquery'));
+        wp_enqueue_script('', CMS_CSS . 'iconpicker/cms-iconpicker.js');
     }
 
 

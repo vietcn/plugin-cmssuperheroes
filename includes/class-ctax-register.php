@@ -40,17 +40,11 @@ class EFramework_CTax_Register
     {
         $this->taxonomies = apply_filters( 'abtheme_extra_taxonomies', array(
             'cmsportfolio-category' => true,
-            'team_member_position' => true
         ) );
 
-        if ( isset( $this->taxonomies['cmsportfolio-category'] ) && $this->taxonomies['cmsportfolio-category'] )
+        if ( isset( $this->taxonomies['cmsportfolio-category'] ) && $this->taxonomies['cmsportfolio-category'] === true )
         {
             $this->portfolio_category_register();
-        }
-
-        if ( isset( $this->taxonomies['team_member'] ) && $this->taxonomies['team_member'] )
-        {
-            $this->type_team_member_register();
         }
     }
     function portfolio_category_register(){
