@@ -56,6 +56,8 @@ class EFramework_CPT_Register
         ));
         foreach ($this->post_types as $key => $cms_post_type) {
             if ($cms_post_type['status'] === true):
+                $cms_post_type_args = !empty($cms_post_type['args'])? $cms_post_type['args']: array();
+                $cms_post_type_labels = !empty($cms_post_type['labels'])? $cms_post_type['labels']: array();
                 $args = array_merge(array(
                     'labels'              => array_merge(array(
                         'name'                  => $cms_post_type['item_name'],
@@ -79,7 +81,7 @@ class EFramework_CPT_Register
                         'items_list_navigation' => $cms_post_type['item_name'] . ' ' . __('list navigation', CMS_TEXT_DOMAIN),
                         'items_list'            => $cms_post_type['item_name'] . ' ' . __('list', CMS_TEXT_DOMAIN),
                         'name_admin_bar'        => $cms_post_type['item_name']
-                    ), $cms_post_type['labels']),
+                    ), $cms_post_type_labels),
                     'hierarchical'        => false,
                     'description'         => '',
                     'public'              => true,
@@ -102,7 +104,7 @@ class EFramework_CPT_Register
                         'excerpt',
                         'revisions'
                     )
-                ), $cms_post_type['args']);
+                ), $cms_post_type_args);
                 register_post_type($key, $args);
                 flush_rewrite_rules();
             endif;
