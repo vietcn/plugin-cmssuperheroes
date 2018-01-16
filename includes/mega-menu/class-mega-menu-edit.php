@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) {
 
 class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit
 {
+    protected $mega_locations;
 
     function __construct()
     {
@@ -45,12 +46,13 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit
 
     function get_fields($item, $depth = 0, $args = array(), $id = 0)
     {
+        $this->mega_locations = apply_filters('cms_locations', array('primary'));
         $check_mega = false;
-        $nav_menu_selected_id = isset($_REQUEST['menu']) ? (int)$_REQUEST['menu'] : intval(get_user_option( 'nav_menu_recently_edited' ));
+        $nav_menu_selected_id = isset($_REQUEST['menu']) ? (int)$_REQUEST['menu'] : intval(get_user_option('nav_menu_recently_edited'));
         $locations = get_registered_nav_menus();
         $menu_locations = get_nav_menu_locations();
         $key = array_search($nav_menu_selected_id, $menu_locations, true);
-        if (in_array($nav_menu_selected_id, $menu_locations) && isset($locations[$key])) {
+        if (in_array($nav_menu_selected_id, $menu_locations) && isset($locations[$key]) && in_array($key, $this->mega_locations)) {
             $check_mega = true;
         }
 
