@@ -38,11 +38,18 @@ if (!class_exists('ReduxFramework_cms_date_range')) {
          */
         function render()
         {
-            echo '<label for="' . $this->field['id'] . '-from">' . $this->field['from']['label'] . '</label>';
-            echo '<input class="cms-datetime-range-from" ' . 'type="text" id="' . $this->field['id'] . '-from" name="' . $this->field['name'] . '[' . $this->field['from']['name'] . ']"' . ' value="' . esc_attr($this->value[$this->field['from']['name']]) . '" />';
+            $range = isset($this->field['range']) ? $this->field['range'] : true;
+            if ($range === true) {
+                $start_date = !empty($this->value[$this->field['from']['name']]) ? esc_attr($this->value[$this->field['from']['name']]) : "";
+                $end_date = !empty($this->value[$this->field['to']['name']]) ? esc_attr($this->value[$this->field['to']['name']]) : "";
+                echo '<label for="' . $this->field['id'] . '-from">' . $this->field['from']['label'] . '</label>';
+                echo '<input class="cms-datetime-range-from" ' . 'type="text" id="' . $this->field['id'] . '-from" name="' . $this->field['name'] . '[' . $this->field['from']['name'] . ']"' . ' value="' . esc_attr($start_date) . '" />';
 
-            echo '<label for="' . $this->field['id'] . '-to">' . $this->field['to']['label'] . '</label>';
-            echo '<input class="cms-datetime-range-to" ' . 'type="text"' . 'id="' . $this->field['id'] . '-to" name="' . $this->field['name'] . '[' . $this->field['to']['name'] . ']' . '" ' . ' value="' . esc_attr($this->value[$this->field['to']['name']]) . '" />';
+                echo '<label for="' . $this->field['id'] . '-to">' . $this->field['to']['label'] . '</label>';
+                echo '<input class="cms-datetime-range-to" ' . 'type="text"' . 'id="' . $this->field['id'] . '-to" name="' . $this->field['name'] . '[' . $this->field['to']['name'] . ']' . '" ' . ' value="' . esc_attr($end_date) . '" />';
+            } else {
+                echo '<input class="cms-date" ' . 'type="text" id="' . $this->field['id'] . '" name="' . $this->field['name'] . '"' . ' value="' . esc_attr($this->value) . '" />';
+            }
         }
 
         public function enqueue()

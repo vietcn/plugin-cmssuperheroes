@@ -46,7 +46,7 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit
     function get_fields($item, $depth = 0, $args = array(), $id = 0)
     {
         $check_mega = false;
-        $nav_menu_selected_id = isset($_REQUEST['menu']) ? (int)$_REQUEST['menu'] : 0;
+        $nav_menu_selected_id = isset($_REQUEST['menu']) ? (int)$_REQUEST['menu'] : intval(get_user_option( 'nav_menu_recently_edited' ));
         $locations = get_registered_nav_menus();
         $menu_locations = get_nav_menu_locations();
         $key = array_search($nav_menu_selected_id, $menu_locations, true);

@@ -45,14 +45,7 @@ class EFramework_CPT_Register
                     'singular_name' => __('Portfolio Entry', CMS_TEXT_DOMAIN),
                     'add_new'       => _x('Add New Portfolio Entry', 'add new on admin panel', CMS_TEXT_DOMAIN),
                 ),
-            ),
-            'cms_post'  => array(
-                'status'     => true,
-                'item_name'  => __('CMS Post', CMS_TEXT_DOMAIN),
-                'items_name' => __('CMS Posts', CMS_TEXT_DOMAIN),
-                'args'       => array(),
-                'labels'     => array()
-            ),
+            )
         ));
         foreach ($this->post_types as $key => $cms_post_type) {
             if ($cms_post_type['status'] === true):

@@ -46,7 +46,6 @@ class EFramework_MegaMenu_Register
     function register_mega_menu_type()
     {
         $cms_locations = apply_filters('cms_locations', array(
-            'cms-menu' => __('CMS Menu')
         ));
         register_nav_menus(
             $cms_locations
