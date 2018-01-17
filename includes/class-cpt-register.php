@@ -41,8 +41,8 @@ class EFramework_CPT_Register
         $this->post_types['portfolio'] = array_merge(
             array(
                 'status'     => true,
-                'item_name'  => __('Portfolios', CMS_TEXT_DOMAIN),
-                'items_name' => __('Portfolio', CMS_TEXT_DOMAIN),
+                'item_name'  => __('Portfolio', CMS_TEXT_DOMAIN),
+                'items_name' => __('Portfolios', CMS_TEXT_DOMAIN),
                 'args'       => array(),
                 'labels'     => array(
                     'singular_name' => __('Portfolio', CMS_TEXT_DOMAIN),
