@@ -47,10 +47,22 @@ class EFramework_CPT_Register
                 ),
             )
         ));
+        $this->post_types['portfolio'] = array_merge(
+            array(
+                'status'     => true,
+                'item_name'  => __('Portfolio', CMS_TEXT_DOMAIN),
+                'items_name' => __('Portfolio Entries', CMS_TEXT_DOMAIN),
+                'args'       => array(),
+                'labels'     => array(
+                    'singular_name' => __('Portfolio Entry', CMS_TEXT_DOMAIN),
+                    'add_new'       => _x('Add New Portfolio Entry', 'add new on admin panel', CMS_TEXT_DOMAIN),
+                )
+            ), $this->post_types['portfolio']
+        );
         foreach ($this->post_types as $key => $cms_post_type) {
             if ($cms_post_type['status'] === true):
-                $cms_post_type_args = !empty($cms_post_type['args'])? $cms_post_type['args']: array();
-                $cms_post_type_labels = !empty($cms_post_type['labels'])? $cms_post_type['labels']: array();
+                $cms_post_type_args = !empty($cms_post_type['args']) ? $cms_post_type['args'] : array();
+                $cms_post_type_labels = !empty($cms_post_type['labels']) ? $cms_post_type['labels'] : array();
                 $args = array_merge(array(
                     'labels'              => array_merge(array(
                         'name'                  => $cms_post_type['item_name'],
