@@ -36,26 +36,17 @@ class EFramework_CPT_Register
     function init()
     {
         $this->post_types = apply_filters('cms_extra_post_types', array(
-            'portfolio' => array(
-                'status'     => true,
-                'item_name'  => __('Portfolio', CMS_TEXT_DOMAIN),
-                'items_name' => __('Portfolio Entries', CMS_TEXT_DOMAIN),
-                'args'       => array(),
-                'labels'     => array(
-                    'singular_name' => __('Portfolio Entry', CMS_TEXT_DOMAIN),
-                    'add_new'       => _x('Add New Portfolio Entry', 'add new on admin panel', CMS_TEXT_DOMAIN),
-                ),
-            )
+            'portfolio' => array()
         ));
         $this->post_types['portfolio'] = array_merge(
             array(
                 'status'     => true,
-                'item_name'  => __('Portfolio', CMS_TEXT_DOMAIN),
-                'items_name' => __('Portfolio Entries', CMS_TEXT_DOMAIN),
+                'item_name'  => __('Portfolios', CMS_TEXT_DOMAIN),
+                'items_name' => __('Portfolio', CMS_TEXT_DOMAIN),
                 'args'       => array(),
                 'labels'     => array(
-                    'singular_name' => __('Portfolio Entry', CMS_TEXT_DOMAIN),
-                    'add_new'       => _x('Add New Portfolio Entry', 'add new on admin panel', CMS_TEXT_DOMAIN),
+                    'singular_name' => __('Portfolio', CMS_TEXT_DOMAIN),
+                    'add_new'       => _x('Add New', 'add new on admin panel', CMS_TEXT_DOMAIN),
                 )
             ), $this->post_types['portfolio']
         );
