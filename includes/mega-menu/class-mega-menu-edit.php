@@ -46,6 +46,7 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit
 
     function get_fields($item, $depth = 0, $args = array(), $id = 0)
     {
+        $enable_megamenu = apply_filters('cms_enable_megamenu', false);
         $this->mega_locations = apply_filters('cms_locations', array('primary'));
         $check_mega = false;
         $nav_menu_selected_id = isset($_REQUEST['menu']) ? (int)$_REQUEST['menu'] : intval(get_user_option('nav_menu_recently_edited'));
@@ -61,7 +62,7 @@ class EFramework_Mega_Menu_Edit_Walker extends Walker_Nav_Menu_Edit
         $item_id = esc_attr($item->ID);
         ?>
 
-        <?php if (0 === $depth && $check_mega) : ?>
+        <?php if (0 === $depth && $check_mega && $enable_megamenu === true) : ?>
         <p class="description description-wide">
             <label for="edit-menu-item-cms-megaprofile-<?php echo esc_attr($item_id); ?>">
                 <?php esc_html_e('Select Mega Menu', CMS_TEXT_DOMAIN); ?><br/>

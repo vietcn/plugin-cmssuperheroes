@@ -27,6 +27,7 @@ define('CMS_TEXT_DOMAIN', 'cmssuperheroes');
  * Require functions on plugin
  */
 require_once CMS_INCLUDES . "functions.php";
+require_once CMS_INCLUDES . "cms-template-functions.php";
 //new CmssuperheroesCore();
 
 /**
@@ -194,6 +195,7 @@ class CmssuperheroesCore
     function cms_register_style()
     {
         wp_enqueue_style('cms-plugin-stylesheet', CMS_CSS . 'cms-style.css');
+        wp_enqueue_style('owl-carousel', CMS_CSS . 'owl.carousel.min.css');
     }
 
     /**
@@ -215,13 +217,7 @@ class CmssuperheroesCore
     {
         wp_register_script('modernizr', CMS_JS . 'modernizr.min.js', array('jquery'));
         wp_register_script('waypoints', CMS_JS . 'waypoints.min.js', array('jquery'));
-        wp_register_script('imagesloaded', CMS_JS . 'jquery.imagesloaded.js', array('jquery'));
-        wp_register_script('jquery-shuffle', CMS_JS . 'jquery.shuffle.js', array('jquery', 'modernizr', 'imagesloaded'));
-        if (file_exists(get_template_directory() . '/assets/js/jquery.shuffle.cms.js')) {
-            wp_register_script('cms-jquery-shuffle', get_template_directory_uri() . '/assets/js/jquery.shuffle.cms.js', array('jquery-shuffle'));
-        } else {
-            wp_register_script('cms-jquery-shuffle', CMS_JS . 'jquery.shuffle.cms.js', array('jquery-shuffle'));
-        }
+        wp_register_script('owl-carousel', CMS_JS . 'owl.carousel.min.js', array('jquery'));
     }
 
     /**
