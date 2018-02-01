@@ -1,21 +1,12 @@
 <?php
-/**
- * @Template: extension_cms_datetime.php
- * @since: 1.0.0
- * @author: KP
- * @descriptions:
- * @create: 23-Dec-17
- */
-
-if (!defined('ABSPATH')) {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-if (!class_exists('CMS_Redux_Extensions_cms_datetime')) {
-
-    class CMS_Redux_Extensions_cms_datetime
-    {
-
+if ( ! class_exists( 'CMS_Redux_Extensions_cms_collapse' ) ) {
+    class CMS_Redux_Extensions_cms_collapse{
+        // Protected vars
         protected $parent;
         public $extension_url;
         public $extension_dir;
@@ -26,7 +17,7 @@ if (!class_exists('CMS_Redux_Extensions_cms_datetime')) {
         public function __construct($parent)
         {
             $this->parent = $parent;
-            $this->field_name = 'cms_datetime';
+            $this->field_name = 'cms_collapse';
 
             self::$theInstance = $this;
 

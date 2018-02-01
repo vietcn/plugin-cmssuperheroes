@@ -1,168 +1,297 @@
 <?php
-vc_map(
-	array(
-		"name" => __("CMS Carousel", CMS_NAME),
-	    "base" => "cms_carousel",
-	    "class" => "vc-cms-carousel",
-	    "category" => __("CmsSuperheroes Shortcodes", CMS_NAME),
-	    "params" => array(
-	    	array(
-	            "type" => "loop",
-	            "heading" => __("Source",CMS_NAME),
-	            "param_name" => "source",
-	            'settings' => array(
-	                'size' => array('hidden' => false, 'value' => 10),
-	                'order_by' => array('value' => 'date')
-	            ),
-	            "group" => __("Source Settings", CMS_NAME),
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("XSmall Devices",CMS_NAME),
-	            "param_name" => "xsmall_items",
-	            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
-	            "value" => array(1,2,3,4,5,6),
-	            "std" => 1,
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	    	array(
-	            "type" => "dropdown",
-	            "heading" => __("Small Devices",CMS_NAME),
-	            "param_name" => "small_items",
-	            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
-	            "value" => array(1,2,3,4,5,6),
-	            "std" => 2,
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("Medium Devices",CMS_NAME),
-	            "param_name" => "medium_items",
-	            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
-	            "value" => array(1,2,3,4,5,6),
-	            "std" => 3,
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("Large Devices",CMS_NAME),
-	            "param_name" => "large_items",
-	            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
-	            "value" => array(1,2,3,4,5,6),
-	           	"std" => 4,
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "textfield",
-	            "heading" => __("Margin Items",CMS_NAME),
-	            "param_name" => "margin",
-	            "value" => "10",
-	            "description" => __("",CMS_NAME),
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("Loop Items",CMS_NAME),
-	            "param_name" => "loop",
-	            "value" => array(
-	            	"True" => "true",
-	            	"False" => "false"
-	            	),
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("Mouse Drag",CMS_NAME),
-	            "param_name" => "mousedrag",
-	            "value" => array(
-	            	"True" => "true",
-	            	"False" => "false"
-	            	),
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("Show Dots",CMS_NAME),
-	            "param_name" => "dots",
-	            "value" => array(
-	            	"True" => "true",
-	            	"False" => "false"
-	            	),
-                "std" => false,
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "dropdown",
-	            "heading" => __("Auto Play",CMS_NAME),
-	            "param_name" => "autoplay",
-	            "value" => array(
-	            	"True" => "true",
-	            	"False" => "false"
-	            	),
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-	        array(
-	            "type" => "textfield",
-	            "heading" => __("Extra Class",CMS_NAME),
-	            "param_name" => "class",
-	            "value" => "",
-	            "description" => __("",CMS_NAME),
-	            "group" => __("Carousel Settings", CMS_NAME)
-	        ),
-            array(
-                'type' => 'cms_template_img',
-                'param_name' => 'cms_template',
-                "shortcode" => "cms_carousel",
-                "heading" => esc_html__("Shortcode Template",CMS_TEXT_DOMAIN),
-                "admin_label" => true,
-                "group" => esc_html__("Template", CMS_TEXT_DOMAIN),
-            ),
-	    )
-	)
-);
-global $cms_carousel;
-$cms_carousel = array();
-class WPBakeryShortCode_cms_carousel extends CmsShortCode{
-	protected function content($atts, $content = null){
-		//default value
-		$atts_extra = shortcode_atts(array(
-			'source' => '',
-			'xsmall_items' => 1,
-			'small_items' => 2,
-			'medium_items' => 3,
-			'large_items' => 4,
-			'margin' => 10,
-			'loop' => 'true',
-			'nav' => 'true',
-			'dots' => 'true',
-			'autoplay' => 'true',
-			'cms_template' => 'cms_carousel.php',
-			'not__in'=> 'false', 
-			'class' => '',
-			    ), $atts);
+/**
+ * @Template: cms_carousel.php
+ * @since: 1.0.0
+ * @author: KP
+ * @descriptions:
+ * @create: 01-Feb-18
+ */
 
-		$atts = array_merge($atts_extra,$atts);
-		global $cms_carousel;
+if (!defined('ABSPATH')) exit;
 
-		if(file_exists(get_template_directory().'/assets/js/owl.carousel.min.js')){
-			// do nothing
-		}else{
-            wp_enqueue_style('owl-carousel',CMS_CSS.'owl.carousel.css','','2.2.1','all');
-            wp_enqueue_script('owl-carousel',CMS_JS.'owl.carousel.min.js',array('jquery'),'2.2.1',true);
-			wp_enqueue_script('owl-carousel-cms',CMS_JS.'owl.carousel.cms.js',array('jquery'),'1.0.0',true);
-		}
-		$source = $atts['source'];
-        if(isset($atts['not__in']) and $atts['not__in'] == 'true'){
-        	list($args, $post) = vc_build_loop_query($source, get_the_ID());
-        	
-        }else{
-        	list($args, $post) = vc_build_loop_query($source);
+if (!class_exists('CMS_Carousel')) {
+    class CMS_Carousel
+    {
+        public function __construct()
+        {
+            add_action('init', array($this, 'add_shortcode'));
+            add_action('vc_before_init', array($this, 'add_param'));
         }
-        $atts['posts'] = $post;
-        $html_id = cmsHtmlID('cms-carousel');
-        $atts['template'] = 'template-'.str_replace('.php','',$atts['cms_template']). ' '. $atts['class'];
-        $atts['html_id'] = $html_id;
-		return parent::content($atts, $content);
-	}
+
+        function add_shortcode()
+        {
+            add_shortcode('cms_carousel', array($this, 'add_shortcode_cms_carousel'));
+        }
+
+        function add_shortcode_cms_carousel($atts, $contents = '')
+        {
+            $atts = shortcode_atts(array(
+                'xsmall_items' => 1,
+                'small_items'  => 2,
+                'medium_items' => 3,
+                'large_items'  => 4,
+                'margin'       => 10,
+                'loop'         => 'true',
+                'mousedrag'    => 'true',
+                'nav'          => 'false',
+                'dots'         => 'false',
+                'autoplay'     => 'false',
+                'el_class'     => '',
+            ), $atts);
+            $contents = $this->cms_columnize_content($contents);
+            return cms_get_template_file__('cms_carousel.php',array('atts'=>$atts,'contents' =>$contents));
+        }
+
+        function add_param()
+        {
+            vc_map(array(
+                    "name"                    => esc_html__("CMS Carousel", CMS_TEXT_DOMAIN),
+                    "base"                    => "cms_carousel",
+                    "class"                   => "cms_carousel",
+                    "content_element"         => true,
+                    "show_settings_on_create" => false,
+                    "is_container"            => true,
+                    "controls"                => "full",
+                    "category"                => esc_html__('CmsSuperheroes Shortcodes', CMS_TEXT_DOMAIN),
+                    "description"             => esc_html__("", CMS_TEXT_DOMAIN),
+                    "as_parent"               => array(
+                        'except' => 'cms_carousel'
+                    ),
+                    "params"                  => array(
+                        array(
+                            'type'        => 'cms_template_img',
+                            'param_name'  => 'cms_template',
+                            "shortcode"   => "cms_carousel",
+                            "heading"     => esc_html__("Shortcode Template", "abtheme"),
+                            "admin_label" => true,
+                            "group"       => esc_html__("Template", "abtheme"),
+                        ),
+                        array(
+                            "type"             => "dropdown",
+                            "heading"          => __("XSmall Devices", "abtheme"),
+                            "param_name"       => "xsmall_items",
+                            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
+                            "value"            => array(1, 2, 3, 4, 5, 6),
+                            "std"              => 1,
+                            "group"            => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"             => "dropdown",
+                            "heading"          => __("Small Devices", "abtheme"),
+                            "param_name"       => "small_items",
+                            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
+                            "value"            => array(1, 2, 3, 4, 5, 6),
+                            "std"              => 2,
+                            "group"            => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"             => "dropdown",
+                            "heading"          => __("Medium Devices", "abtheme"),
+                            "param_name"       => "medium_items",
+                            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
+                            "value"            => array(1, 2, 3, 4, 5, 6),
+                            "std"              => 3,
+                            "group"            => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"             => "dropdown",
+                            "heading"          => __("Large Devices", "abtheme"),
+                            "param_name"       => "large_items",
+                            "edit_field_class" => "vc_col-sm-3 vc_carousel_item",
+                            "value"            => array(1, 2, 3, 4, 5, 6),
+                            "std"              => 4,
+                            "group"            => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"        => "textfield",
+                            "heading"     => __("Margin Items", "abtheme"),
+                            "param_name"  => "margin",
+                            "value"       => "10",
+                            "description" => __("", "abtheme"),
+                            "group"       => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"       => "dropdown",
+                            "heading"    => __("Loop Items", "abtheme"),
+                            "param_name" => "loop",
+                            "value"      => array(
+                                "True"  => "true",
+                                "False" => "false"
+                            ),
+                            "group"      => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"       => "dropdown",
+                            "heading"    => __("Mouse Drag", "abtheme"),
+                            "param_name" => "mousedrag",
+                            "value"      => array(
+                                "True"  => "true",
+                                "False" => "false"
+                            ),
+                            "group"      => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"       => "dropdown",
+                            "heading"    => __("Show Navigation", "abtheme"),
+                            "param_name" => "nav",
+                            "value"      => array(
+                                "False" => "false",
+                                "True"  => "true",
+                            ),
+                            "std"        => false,
+                            "group"      => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"       => "dropdown",
+                            "heading"    => __("Show Dots", "abtheme"),
+                            "param_name" => "dots",
+                            "value"      => array(
+                                "False" => "false",
+                                "True"  => "true",
+                            ),
+                            "std"        => false,
+                            "group"      => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"       => "dropdown",
+                            "heading"    => __("Auto Play", "abtheme"),
+                            "param_name" => "autoplay",
+                            "value"      => array(
+                                "False" => "false",
+                                "True"  => "true",
+                            ),
+                            "group"      => __("Carousel Settings", "abtheme")
+                        ),
+                        array(
+                            "type"        => "textfield",
+                            "heading"     => esc_html__("Extra class name", "abtheme"),
+                            "param_name"  => "el_class",
+                            "description" => esc_html__("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "abtheme"),
+                        ),
+                    ),
+                    "js_view"                 => 'VcColumnView'
+                )
+            );
+        }
+
+        protected function cms_columnize_content( &$content ) {
+            global $shortcode_tags;
+            preg_match_all( '@\[([^<>&/\[\]\x00-\x20=]++)@', $content, $matches );
+            $tagnames = array_intersect( array_keys( $shortcode_tags ), $matches[1] );
+            $pattern = get_shortcode_regex();
+            foreach( $tagnames as $tag ) {
+                $start = "[$tag";
+                $end = "[/$tag]";
+
+                if( strpos( $content, $end ) !== false) {
+                    $content = str_replace( $start, '' . $start, $content );
+                    $content = str_replace( $end, $end . '||', $content );
+                }
+                $content = str_replace( '][',  ']||[', $content );
+
+            }
+            return explode('||',$content);
+
+        }
+    }
+
+    new CMS_Carousel();
+
+    if (class_exists('WPBakeryShortCodesContainer') && !class_exists('CMS_ShortcodeContainer')) {
+
+        /**
+         * Shortcode COntainer class
+         */
+        class CMS_ShortcodeContainer extends WPBakeryShortCodesContainer
+        {
+
+            /**
+             * [$controls_css_settings description]
+             * @var string
+             */
+            protected $controls_css_settings = 'out-tc vc_controls-content-widget';
+
+            /**
+             * [$controls_list description]
+             * @var array
+             */
+            protected $controls_list = array('add', 'edit', 'delete');
+
+            /**
+             * @param $width
+             * @param $i
+             *
+             * @return string
+             */
+            public function mainHtmlBlockParams($width, $i)
+            {
+                $sortable = (vc_user_access_check_shortcode_all('cms_carousel') ? 'wpb_sortable' : 'vc-non-draggable');
+
+                return 'data-element_type="' . 'cms_carousel' . '" class="rella-content-holder wpb_' . 'cms_carousel' . ' ' . $sortable . ' wpb_content_holder vc_shortcodes_container"' . $this->customAdminBlockParams();
+            }
+
+            public function getColumnControls($controls = 'full', $extended_css = '')
+            {
+
+                $column_controls = $this->getColumnControlsModular();
+
+                $column_controls = str_replace('vc_element-move"', 'vc_element-move" data-vc-control="move"', $column_controls);
+                $column_controls = str_replace('vc_edit"', 'vc_edit" data-vc-control="add"', $column_controls);
+                $column_controls = str_replace('vc_control-btn-edit"', 'vc_control-btn-edit" data-vc-control="edit"', $column_controls);
+//                $column_controls = str_replace( 'vc_control-btn-clone"', 'vc_control-btn-clone" data-vc-control="clone"', $column_controls );
+                $column_controls = str_replace('vc_control-btn-delete"', 'vc_control-btn-delete" data-vc-control="delete"', $column_controls);
+
+                return $column_controls;
+            }
+
+            public function contentAdmin($atts, $content = null)
+            {
+
+                $width = $el_class = '';
+
+                $atts = shortcode_atts($this->predefined_atts, $atts);
+                extract($atts);
+                $this->atts = $atts;
+                $output = '';
+
+                for ($i = 0; $i < count($width); $i++) {
+
+                    $output .= '<div ' . $this->mainHtmlBlockParams($width, $i) . '>';
+
+                    if ($this->backened_editor_prepend_controls) {
+                        $output .= $this->getColumnControls('full', 'vc_controls-out-tc vc_controls-content-widget');
+                    }
+
+
+                    $output .= '<div class="cms-param-holder">';
+
+                    $output .= $this->paramsHtmlHolders($atts);
+
+                    $output .= '</div>';
+
+                    $output .= '<div class="wpb_element_wrapper">';
+
+                    $output .= '<div ' . $this->containerHtmlBlockParams($width, $i) . '>';
+
+                    $output .= do_shortcode(shortcode_unautop($content));
+
+                    $output .= '</div>';
+
+                    $output .= '</div>';
+
+                    $output .= '</div>';
+                }
+
+                return $output;
+            }
+        }
+    }
+
+    if (class_exists('WPBakeryShortCodesContainer')) {
+
+        class WPBakeryShortCode_cms_carousel extends CMS_ShortcodeContainer
+        {
+        }
+
+    }
 }
-?>

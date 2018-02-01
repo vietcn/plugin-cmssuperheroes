@@ -11,6 +11,8 @@ function cms_get_grid_term_list($post_type)
 {
     $taxonomy_objects = get_object_taxonomies($post_type, 'names');
     $term_list = array();
+    $term_list['terms'] = array();
+    $term_list['auto_complete'] = array();
     foreach ($taxonomy_objects as $tax) {
         $terms = get_terms(
             array(
@@ -85,7 +87,7 @@ function cms_get_posts_of_grid($post_type = 'post', $atts = array())
             foreach ($source_a as $terms) {
                 $tmp = explode('|', $terms);
                 if (isset($tmp[0]) && isset($tmp[1])) {
-                    $args_lol['tax_query'][] = array(
+                    $args['tax_query'][] = array(
                         'taxonomy' => $tmp[1],
                         'field'    => 'term_id',
                         'operator' => 'IN',

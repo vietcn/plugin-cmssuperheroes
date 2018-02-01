@@ -3,9 +3,8 @@
  * The template for the menu container of the panel.
  * It's silly that we need this for redux scripts fully worked, although we dont use this.
  */
-$post_layout = (function_exists('get_post_type') && get_post_type(get_the_ID()) === 'post') ? true : false;
 ?>
-<div class="redux-sidebar" <?php echo $post_layout ? 'style="display: none;"' : '' ?>>
+<div class="redux-sidebar">
     <ul class="redux-group-menu">
         <?php
         foreach ($this->parent->sections as $k => $section) {

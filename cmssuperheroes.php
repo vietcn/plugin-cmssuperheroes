@@ -44,6 +44,8 @@ class CmssuperheroesCore
      */
     private static $_instance;
 
+    public $file;
+
     /**
      * Store plugin paths
      *
@@ -59,15 +61,18 @@ class CmssuperheroesCore
 
     protected $taxonomy_meta = null;
 
+    protected $user_meta = null;
+
     public function __construct()
     {
         $dir = untrailingslashit(plugin_dir_path(__FILE__));
         $url = untrailingslashit(plugin_dir_url(__FILE__));
-
+        $this->file = __FILE__;
         $this->set_paths(array(
             'APP_DIR' => $dir,
             'APP_URL' => $url
         ));
+        self::includes();
 
         /**
          * Init function, which is run on site init and plugin loaded
@@ -138,6 +143,8 @@ class CmssuperheroesCore
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             WP_Filesystem();
         }
+
+        require_once CMS_DIR . '/shortcodes/cms_carousel.php';
     }
 
     function cmsInit()
@@ -384,7 +391,6 @@ class CmssuperheroesCore
                 $this->post_metabox = new CMS_Post_Metabox($redux);
             }
         }
-
         if (!class_exists('CMS_Taxonomy_Meta')) {
             require_once $this->path('APP_DIR', 'includes/class-taxonomy-meta.php');
 
@@ -392,6 +398,18 @@ class CmssuperheroesCore
                 $this->taxonomy_meta = new CMS_Taxonomy_Meta($redux);
             }
         }
+
+//        if (!class_exists('CMS_User_Meta')) {
+//            require_once $this->path('APP_DIR', 'includes/class-user-meta.php');
+//
+//            if (empty($this->user_meta)) {
+//                $this->user_meta = new CMS_User_Meta($redux);
+//            }
+//        }
+    }
+
+    private function includes()
+    {
     }
 
     /**

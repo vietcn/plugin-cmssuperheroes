@@ -19,7 +19,7 @@ function cms_shortcode_template_img($settings, $value) {
     $output .= "</select>";
     $output .= "<div id=\"".$shortcode."-cms-img-select\">";
     foreach ($files as $key => $file) {
-        $img = get_template_directory_uri().'/vc_params/'.$shortcode.'/'.basename($key,'.php').'.jpg';
+        $img = get_template_directory_uri().'/vc_elements/image_layout/'.$shortcode.'/'.basename($key,'.php').'.jpg';
         if ($key == esc_attr($value)) {
             $output .= "<div class='cms-img-select-item'><img src=\"".$img."\" data-value=\"".$key."\" class=\"cms-img-select selected\" /></div>";
         } else {

@@ -101,4 +101,46 @@ function cms_require_folder($foldername,$path)
     }
 }
 
+function cms_get_template_file__($template, $data = array())
+{
+    extract($data);
+    $template_file = cms_get_template_file($template);
+    if ($template_file !== false) {
+        ob_start();
+        include $template_file;
+        return ob_get_clean();
+    }
+    return false;
+}
+
+function cms_get_template_file($template, $dir = null)
+{
+
+    if ($dir === null) {
+        $dir = 'vc_templates';
+    }
+
+    $template_file = get_template_directory() . DIRECTORY_SEPARATOR . $dir  .DIRECTORY_SEPARATOR. $template;
+
+    if (file_exists($template_file)) {
+        return $template_file;
+    } else {
+        $template_file = cmssuperheroes()->path('APP_DIR', 'templates/shortcodes') . DIRECTORY_SEPARATOR . $template;
+        if (file_exists($template_file)) {
+            return $template_file;
+        }
+    }
+
+    return false;
+}
+
+function cms_do_the_content( $content, $autop = true ) {
+
+    if ( $autop ) {
+        $content = wpautop( preg_replace( '/<\/?p\>/', "\n", $content ) . "\n" );
+    }
+
+    return do_shortcode( shortcode_unautop( $content ) );
+}
+
 ?>
