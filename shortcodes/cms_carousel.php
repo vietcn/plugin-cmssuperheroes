@@ -236,9 +236,7 @@ if (!class_exists('CMS_Carousel')) {
                 $column_controls = $this->getColumnControlsModular();
 
                 $column_controls = str_replace('vc_element-move"', 'vc_element-move" data-vc-control="move"', $column_controls);
-                $column_controls = str_replace('vc_edit"', 'vc_edit" data-vc-control="add"', $column_controls);
                 $column_controls = str_replace('vc_control-btn-edit"', 'vc_control-btn-edit" data-vc-control="edit"', $column_controls);
-//                $column_controls = str_replace( 'vc_control-btn-clone"', 'vc_control-btn-clone" data-vc-control="clone"', $column_controls );
                 $column_controls = str_replace('vc_control-btn-delete"', 'vc_control-btn-delete" data-vc-control="delete"', $column_controls);
 
                 return $column_controls;
