@@ -143,8 +143,10 @@ class CmssuperheroesCore
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             WP_Filesystem();
         }
-
-        require_once CMS_DIR . '/shortcodes/cms_carousel.php';
+        $enable_cms_carousel = apply_filters('enable_cms_carousel',true);
+        if($enable_cms_carousel){
+            require_once CMS_DIR . '/shortcodes/cms_carousel.php';
+        }
     }
 
     function cmsInit()
