@@ -72,7 +72,7 @@ body .vc_shortcodes_container > .wpb_element_wrapper {
     margin-top: 20px;
 }
 
-body .vc_controls, body .vc_layout-switcher {
+body .wpb_cms_carousel .vc_controls, body .wpb_cms_carousel .vc_layout-switcher {
     opacity: 1 !important;
     visibility: visible !important;
 }
