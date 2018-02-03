@@ -1,0 +1,94 @@
+.cms-img-select-item {
+    float: left;
+    margin: 10px 0;
+    width: 32%;
+    width: calc(33.33% - 20px);
+    width: -webkit-calc(33.33% - 20px);
+    width: -ms-calc(33.33% - 20px);
+    width: -moz-calc(33.33% - 20px);
+    padding: 0 10px;
+}
+
+.cms-img-select {
+    width: 100%;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -ms-border-radius: 6px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.20);
+    -ms-box-shadow: 0 0 6px rgba(0, 0, 0, 0.20);
+    transition: all 300ms linear 0ms;
+    -webkit-transition: all 300ms linear 0ms;
+    -ms-transition: all 300ms linear 0ms;
+    cursor: pointer;
+}
+
+.cms-img-select:hover, .cms-img-select.selected {
+    box-shadow: 0 0 16px rgba(4, 115, 170, 0.8);
+    -webkit-box-shadow: 0 0 16px rgba(4, 115, 170, 0.8);
+    -ms-box-shadow: 0 0 16px rgba(4, 115, 170, 0.8);
+}
+
+.redux-sidebar .redux-sidebar-head {
+    border-bottom: 1px solid #e7e7e7;
+    color: #999;
+    padding: 15px;
+    text-align: center;
+}
+
+.redux-sidebar .redux-logo-main img {
+    max-width: 70%;
+}
+
+.redux-sidebar-head .abcore-redux-logo {
+    text-align: center;
+}
+
+.redux-sidebar-head .abcore-redux-logo img {
+    max-width: 70%;
+    width: 100%;
+}
+
+.redux-sidebar-head span {
+    display: block;
+    padding-top: 12px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.redux-logo-text {
+    color: #666;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.wpb_column_container > :first-child {
+    margin-top: 18px;
+    background: #e6e6e6;
+}
+
+body .wpb_cms_carousel.vc_shortcodes_container > .wpb_element_wrapper {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+body .wpb_cms_carousel > .vc_controls, body .wpb_cms_carousel > .vc_layout-switcher {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+body .wpb_cms_carousel .vc_controls > .vc_controls-out-tc {
+    left: 50%;
+    top: 1px !important;
+    position: relative;
+    max-width: fit-content;
+}
+
+body .wpb_cms_carousel.vc_shortcodes_container > .wpb_element_wrapper > .vc_container_for_children {
+    margin: 0 !important;
+    outline: #e6e6e6 dotted 1px;
+    min-height: 55px;
+}
+.cms-param-holder {
+    margin-top: 15px;
+}
