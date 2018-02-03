@@ -41,5 +41,6 @@ class CmsShortCode extends WPBakeryShortCode {
         $files = array_merge(cmsFileScanDirectory(CMS_TEMPLATES, $reg), $files);
         return $files;
     }
+    
 
 }
