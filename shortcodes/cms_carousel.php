@@ -25,6 +25,8 @@ if (!class_exists('CMS_Carousel')) {
 
         function add_shortcode_cms_carousel($atts, $contents = '')
         {
+            wp_enqueue_script( 'owl-carousel' );
+            wp_enqueue_script( 'summercamp-carousel' );
             $atts = shortcode_atts(array(
                 'xsmall_items' => 1,
                 'small_items'  => 2,
@@ -227,7 +229,7 @@ if (!class_exists('CMS_Carousel')) {
             {
                 $sortable = (vc_user_access_check_shortcode_all('cms_carousel') ? 'wpb_sortable' : 'vc-non-draggable');
 
-                return 'data-element_type="' . 'cms_carousel' . '" class="rella-content-holder wpb_' . 'cms_carousel' . ' ' . $sortable . ' wpb_content_holder vc_shortcodes_container"' . $this->customAdminBlockParams();
+                return 'data-element_type="' . 'cms_carousel' . '" class="cms-content-holder wpb_' . 'cms_carousel' . ' ' . $sortable . ' wpb_content_holder vc_shortcodes_container"' . $this->customAdminBlockParams();
             }
 
             public function getColumnControls($controls = 'full', $extended_css = '')
@@ -238,7 +240,7 @@ if (!class_exists('CMS_Carousel')) {
                 $column_controls = str_replace('vc_element-move"', 'vc_element-move" data-vc-control="move"', $column_controls);
                 $column_controls = str_replace('vc_edit"', 'vc_edit" data-vc-control="add"', $column_controls);
                 $column_controls = str_replace('vc_control-btn-edit"', 'vc_control-btn-edit" data-vc-control="edit"', $column_controls);
-                // $column_controls = str_replace( 'vc_control-btn-clone"', 'vc_control-btn-clone" data-vc-control="clone"', $column_controls );
+//                $column_controls = str_replace( 'vc_control-btn-clone"', 'vc_control-btn-clone" data-vc-control="clone"', $column_controls );
                 $column_controls = str_replace('vc_control-btn-delete"', 'vc_control-btn-delete" data-vc-control="delete"', $column_controls);
 
                 return $column_controls;
