@@ -8,6 +8,7 @@
  */
 
 if (!defined('ABSPATH')) exit;
+
 if (!class_exists('CMS_Carousel')) {
     class CMS_Carousel
     {

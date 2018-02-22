@@ -155,6 +155,7 @@ class CMS_Taxonomy_Meta
             add_action("redux/page/{$tax_panel['args']['opt_name']}/enqueue", array($this, 'panel_scripts'));
             add_filter("redux/{$tax_panel['args']['opt_name']}/panel/templates_path", array($this, 'panel_template'));
             add_filter("redux/options/{$tax_panel['args']['opt_name']}/options", array($this, 'get_values'));
+            Redux::init($tax_panel['args']['opt_name']);
         }
     }
 

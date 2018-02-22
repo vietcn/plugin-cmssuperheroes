@@ -77,18 +77,11 @@ class CmssuperheroesCore
         /**
          * Init function, which is run on site init and plugin loaded
          */
-        add_action('init', array($this, 'cmsInit'));
+        add_action('init', array($this, 'cmsInit'),2);
         add_action('plugins_loaded', array($this, 'cmsActionInit'));
         add_filter('style_loader_tag', array($this, 'cmsValidateStylesheet'));
         register_activation_hook(__FILE__, array($this, 'activation_hook'));
 
-        if (!class_exists('ReduxFramework')) {
-            add_action('admin_notices', array($this, 'redux_framework_notice'));
-        } else {
-            // Late at 30 to be sure that other extensions available via same hook.
-            // Eg: Load extensions at 29 or lower.
-            add_action("redux/extensions/before", array($this, 'redux_extensions'), 30);
-        }
         if (!class_exists('EFramework_enqueue_scripts')) {
             require_once $this->path('APP_DIR', 'includes/class-enqueue-scripts.php');
         }
@@ -155,6 +148,32 @@ class CmssuperheroesCore
             // scss compiler library
             if (!class_exists('scssc')) {
                 require_once CMS_LIBRARIES . 'scss.inc.php';
+            }
+        }
+
+        if (!class_exists('ReduxFramework')) {
+            add_action('admin_notices', array($this, 'redux_framework_notice'));
+        } else {
+            // Late at 30 to be sure that other extensions available via same hook.
+            // Eg: Load extensions at 29 or lower.
+//            add_action("redux/extensions/before", array($this, 'redux_extensions'), 30);
+            $redux = new ReduxFramework();
+            if (!class_exists('CMS_Redux_Extensions')) {
+                require_once $this->path('APP_DIR', 'includes/class-redux-extensions.php');
+            }
+            if (!class_exists('CMS_Post_Metabox')) {
+                require_once $this->path('APP_DIR', 'includes/class-post-metabox.php');
+
+                if (empty($this->post_metabox)) {
+                    $this->post_metabox = new CMS_Post_Metabox($redux);
+                }
+            }
+            if (!class_exists('CMS_Taxonomy_Meta')) {
+                require_once $this->path('APP_DIR', 'includes/class-taxonomy-meta.php');
+
+                if (empty($this->taxonomy_meta)) {
+                    $this->taxonomy_meta = new CMS_Taxonomy_Meta($redux);
+                }
             }
         }
     }

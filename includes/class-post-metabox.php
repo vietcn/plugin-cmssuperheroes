@@ -92,9 +92,8 @@ class CMS_Post_Metabox
     {
         $this->default_args = $redux->args;
         $this->optimize_default_args();
-
         do_action('cms_post_metabox_register', $this);
-
+        
         if (empty($this->post_types) || empty($this->panels)) {
             return;
         }
@@ -229,7 +228,7 @@ class CMS_Post_Metabox
      */
     protected function optimize_default_args()
     {
-//        $this->default_args['opt_name'] = isset($this->default_args['opt_name']) ? $this->default_args['opt_name'] . '_post_metabox' : 'abtheme_post_metabox';
+        $this->default_args['opt_name'] = isset($this->default_args['opt_name']) ? $this->default_args['opt_name'] . '_post_metabox' : 'cms_post_metabox';
         $this->default_args['display_name'] = esc_html__('Settings', CMS_TEXT_DOMAIN);
         $this->default_args['open_expanded'] = true;
         $this->default_args['footer_credit'] = '';
@@ -270,7 +269,7 @@ class CMS_Post_Metabox
             }
 
             if (in_array($field['id'], $this->field_ids[$post_type])) {
-                trigger_error(esc_html__('The field with id',CMS_TEXT_DOMAIN).' '.esc_html($field['id']).' ' .esc_html__('for post type',CMS_TEXT_DOMAIN).' '.esc_html($post_type).' '.esc_html__('is already registered.', CMS_TEXT_DOMAIN));
+                trigger_error(esc_html__('The field with id', CMS_TEXT_DOMAIN) . ' ' . esc_html($field['id']) . ' ' . esc_html__('for post type', CMS_TEXT_DOMAIN) . ' ' . esc_html($post_type) . ' ' . esc_html__('is already registered.', CMS_TEXT_DOMAIN));
                 unset($section['fields'][$fkey]);
                 continue;
             }
@@ -284,7 +283,7 @@ class CMS_Post_Metabox
 
         if (!empty($section['id'])) {
             if ($this->section_exist($section['id'], $post_type)) {
-                trigger_error(esc_html__('Section',CMS_TEXT_DOMAIN).' '.esc_html($field['id']).' ' .esc_html__('for post type',CMS_TEXT_DOMAIN).' '.esc_html($post_type).' '.esc_html__('is already registered.', CMS_TEXT_DOMAIN));
+                trigger_error(esc_html__('Section', CMS_TEXT_DOMAIN) . ' ' . esc_html($field['id']) . ' ' . esc_html__('for post type', CMS_TEXT_DOMAIN) . ' ' . esc_html($post_type) . ' ' . esc_html__('is already registered.', CMS_TEXT_DOMAIN));
                 return;
             } else {
                 $this->panels[$post_type]['sections'][$section['id']] = $section;
@@ -399,6 +398,7 @@ class CMS_Post_Metabox
             add_action("redux/page/{$panel['args']['opt_name']}/enqueue", array($this, 'panel_scripts'));
             add_filter("redux/{$panel['args']['opt_name']}/panel/templates_path", array($this, 'panel_template'));
             add_filter("redux/options/{$panel['args']['opt_name']}/options", array($this, 'get_values'));
+            Redux::init($panel['args']['opt_name']);
         }
     }
 
@@ -677,8 +677,9 @@ class CMS_Post_Metabox
         if (!current_user_can('edit_post', $post_id)) {
             return;
         }
+        do_action('cms_pre_save_post');
 
-        if (!isset($_POST['srfmetabox_post_nonce']) ||!wp_verify_nonce(sanitize_key(wp_unslash($_POST['srfmetabox_post_nonce'])), 'srfmetabox_post_nonce_action')) {
+        if (!isset($_POST['srfmetabox_post_nonce']) || !wp_verify_nonce(sanitize_key(wp_unslash($_POST['srfmetabox_post_nonce'])), 'srfmetabox_post_nonce_action')) {
             return;
         }
         $post_type = sanitize_text_field(wp_unslash($_POST['post_type']));
@@ -733,8 +734,8 @@ class CMS_Post_Metabox
          * Save post format data
          */
         $post_format = !empty($_REQUEST['post_format']) ? $_REQUEST['post_format'] : '';
-        if(!empty($post_format)){
-            $cms_pf_panel = 'cms_pf_'.$post_format;
+        if (!empty($post_format)) {
+            $cms_pf_panel = 'cms_pf_' . $post_format;
             $post_format_type = !empty($_POST['post_format_' . $post_format]) ? $_POST['post_format_' . $post_format] : '';
             if (in_array($cms_pf_panel, $this->post_types) && !empty($_POST[$this->panels[$cms_pf_panel]['args']['opt_name']]) && !empty($post_format_type)) {
                 $sections_post_format = $this->get_opt_sections($cms_pf_panel);

@@ -132,3 +132,28 @@ function cms_get_posts_of_grid($post_type = 'post', $atts = array())
         'total'      => $cms_query->found_posts
     );
 }
+
+function cms_get_filter_grid($posts = array(), $post_type = 'post', $categories = array())
+{
+    if (empty($categories)) {
+        $categories = get_object_taxonomies($post_type, 'names');
+    }
+    $filters = array();
+    $term_list = array();
+    foreach ($posts as $post) {
+        $list = array();
+        foreach ($categories as $tax) {
+            $term_ids = wp_get_post_terms($post->ID, $tax, array('fields' => 'ids'));
+            foreach ($term_ids as $term) {
+                $_t = get_term($term, $tax);
+                $term_list[$_t->term_id] = $_t->name;
+            }
+            $list = array_merge($list, $term_ids);
+        }
+        $filters[$post->ID] = $list;
+    }
+    return array(
+        'terms'   => $term_list,
+        'filters' => $filters
+    );
+}

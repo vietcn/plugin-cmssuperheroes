@@ -1,16 +1,6 @@
-<?php 
-/* Loads Stroke 7 Icon Font. */
+<?php
 add_filter( 'vc_iconpicker-type-pe7stroke', 'vc_iconpicker_type_pe7stroke' );
 
-/**
- * Pe7 Stroke icons from themes-pixeden.com/
- *
- * @param $icons - taken from filter - vc_map param field settings['source'] provided icons (default empty array).
- * If array categorized it will auto-enable category dropdown
- *
- * @since 4.4
- * @return array - of icons for iconpicker, can be categorized, or not.
- */
 function vc_iconpicker_type_pe7stroke( $icons ) {
 	$pe7stroke_icons = array(
 		array( "pe-7s-album" => __( "Album", "js_composer" ) ),
